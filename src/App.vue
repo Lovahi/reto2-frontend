@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
 </script>
 
 <template>
@@ -9,10 +10,15 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <h1 class="text-8xl font-bold text-indigo-600">Hello world!</h1>
 
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <i class="pi pi-spin pi-cog" style="font-size: 2rem"></i>
+
+
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
       <nav>
+
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
