@@ -7,6 +7,8 @@ import HelloWorld from './components/HelloWorld.vue'
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
+    <h1 class="text-8xl font-bold text-indigo-600">Hello world!</h1>
+
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
 
