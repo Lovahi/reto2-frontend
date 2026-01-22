@@ -1,27 +1,19 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import prueba from './views/Prueba.vue';
-import Videojuegos from './views/Videojuegos.vue';
+import { RouterView } from 'vue-router'
 import NavbarComponent from './components/NavbarComponent.vue';
-
-
-
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-900 text-white"> <NavBar />
-  <h1 class="bg-emerald-500 text-center">GameFest!</h1>
-  <!-- <RouterView /> -->
-    <prueba />
-    <Videojuegos />
-  </div>
+  <div id="app" class="min-h-screen bg-gray-900 text-white">
 
-<div id="app">
-  <NavbarComponent />
-</div>
+    <NavbarComponent />
+
+    <main class="p-4">
+      <RouterView />
+    </main>
+
+  </div>
 </template>
 
 <style scoped>
-
-
 </style>
