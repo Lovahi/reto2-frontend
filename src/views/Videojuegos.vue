@@ -1,5 +1,6 @@
 <script setup>
 import FiltroVideojuegos from '../components/Videojuegos/FiltroVideojuegos.vue';
+import tarjeta from '../components/Videojuegos/.vue';
 
 </script>
 
@@ -8,5 +9,6 @@ import FiltroVideojuegos from '../components/Videojuegos/FiltroVideojuegos.vue';
 
         <h1 class="font-bold text-emerald-500 mb-8 text-center">Juegos </h1>
         <FiltroVideojuegos />
+
     </div>
 </template>
