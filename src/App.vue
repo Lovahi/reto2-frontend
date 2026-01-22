@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import prueba from './views/Prueba.vue';
 import Videojuegos from './views/Videojuegos.vue';
 import NavbarComponent from './components/NavbarComponent.vue';
+import FooterComponent from './components/FooterComponent.vue';
 
 
 
@@ -20,6 +21,10 @@ import NavbarComponent from './components/NavbarComponent.vue';
   <!-- <RouterView /> -->
     <prueba />
     <Videojuegos />
+  </div>
+
+  <div>
+    <FooterComponent />
   </div>
 
 </template>
