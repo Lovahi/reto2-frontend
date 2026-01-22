@@ -4,7 +4,7 @@ import TarjetaBase from './TarjetaBase.vue'
 const store = useCounterStore()
 </script>
 <template>
-  <div class="flex flex-wrap justify-center gap-6 w-full my-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-8">
     <tarjeta-base v-for="(evento, index) in store.listaEventos" :key="index">
       <template #image>
         <img class="h-48 w-full object-cover" :src="evento.image" alt="Imagen del evento" />

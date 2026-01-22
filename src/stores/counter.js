@@ -8,7 +8,7 @@ export const useCounterStore = defineStore('counter', () => {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
       titulo: 'AAAAA',
       genero: 'XXXXXXXX',
-      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY',
       plataformas: ["A, B, C"],
     },
     {
@@ -16,7 +16,7 @@ export const useCounterStore = defineStore('counter', () => {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
       titulo: 'BBBBB',
       genero: 'XXXXXXXX',
-      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYYYYYYYYYYY',
       plataformas: ["A, B, C"],
     },
     {
@@ -24,7 +24,7 @@ export const useCounterStore = defineStore('counter', () => {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
       titulo: 'AAAAA',
       genero: 'XXXXXXXX',
-      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY',
       plataformas: ["A, B, C"],
     },
   ])
