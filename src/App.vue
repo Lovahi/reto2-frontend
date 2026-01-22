@@ -1,11 +1,6 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import prueba from './views/Prueba.vue';
-import Videojuegos from './views/Videojuegos.vue';
+import { RouterView } from 'vue-router'
 import NavbarComponent from './components/NavbarComponent.vue';
-
-
-
 </script>
 
 <template>
@@ -25,6 +20,4 @@ import NavbarComponent from './components/NavbarComponent.vue';
 </template>
 
 <style scoped>
-
-
 </style>
