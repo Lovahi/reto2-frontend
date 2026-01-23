@@ -1,6 +1,6 @@
 <script setup>
 import FiltroVideojuegos from '../components/Videojuegos/FiltroVideojuegos.vue';
-import tarjeta from '../components/Videojuegos/.vue';
+import tarjeta from '../components/Videojuegos/.vue'; 
 
 </script>
 
