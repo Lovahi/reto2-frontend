@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useCounterStore = defineStore('counter', () => {
+  const tiposEventos = ref(["presentación", "charla", "taller"]);
   const listaJuegos = ref([
     {
       image:
@@ -151,5 +152,5 @@ export const useCounterStore = defineStore('counter', () => {
       console.error("Error cargando eventos:", error)
     }
   } */
-  return { listaEventos, listaJuegos }
+  return { listaEventos, listaJuegos, tiposEventos }
 })
