@@ -3,61 +3,21 @@
 </script>
 
 <template>
-<div class="main">
-    <div class="title">
-    <h1>GameFest!</h1>
-    <p>Explora el mundo virtual!</p>
+<div class="flex flex-col items-center justify-center h-[50vh] gap-5">
+    
+    <div class="flex flex-col gap-[30px] text-center text-[xx-large]">
+      <h1 class="text-[#4ab491] font-bold">GameFest!</h1>
+      <p class="text-gray-600">Explora el mundo virtual!</p>
     </div>
-    <div class="buttons">
-    <button class="btn-login">Iniciar sesion</button>
-    <button class="btn-register"> Registrarse </button>
+
+    <div class="mt-5">
+      <button class="mx-[10px] p-[10px] text-center rounded-[5px] text-[#4ab491] bg-white border border-[#4ab491] hover:bg-gray-50 transition-colors">
+        Iniciar sesion
+      </button>
+      <button class="mx-[10px] p-[10px] text-center rounded-[5px] bg-[#4ab491] text-white hover:bg-[#3d9679] transition-colors">
+        Registrarse
+      </button>
     </div>
+
 </div>
 </template>
-
-<style>
-.main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
-    gap: 20px;
-}
-.title{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    text-align: center;
-    font-size: xx-large;
-}
-.title h1{
-    color:rgb(74, 180, 145);
-}
-
-
-.buttons{
-    margin-top: 20px;
-
-}
-.btn-login, .btn-register{
-    margin: 0 10px;
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-}
-.btn-login {
-    color: rgb(74, 180, 145);
-    background-color: white;
-    border: 1px solid;
-
-}
-
-.btn-register {
-    background-color: rgb(74, 180, 145);
-    color: white;
-}
-
-
-
-</style>
