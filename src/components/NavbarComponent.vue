@@ -6,7 +6,7 @@
       <p>GameFest</p>
     </div>
     <div class="nav-links">
-      <RouterLink to="/home" class="nav-item">Inicio</RouterLink>
+      <RouterLink to="/" class="nav-item">Inicio</RouterLink>
       <RouterLink to="/videojuegos" class="nav-item">Juegos</RouterLink>
       <RouterLink to="/eventos" class="nav-item">Eventos</RouterLink>
     </div>

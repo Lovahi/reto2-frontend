@@ -1,6 +1,6 @@
 <script setup>
 import FiltroVideojuegos from '../components/Videojuegos/FiltroVideojuegos.vue';
-import tarjeta from '../components/Videojuegos/.vue'; 
+import TarjetaGame from '@/components/Videojuegos/TarjetaGame.vue';
 
 </script>
 
@@ -9,6 +9,7 @@ import tarjeta from '../components/Videojuegos/.vue';
 
         <h1 class="font-bold text-emerald-500 mb-8 text-center">Juegos </h1>
         <FiltroVideojuegos />
+        <tarjeta-game />
 
     </div>
 </template>

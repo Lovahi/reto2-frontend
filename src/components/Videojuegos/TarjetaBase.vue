@@ -30,7 +30,7 @@
         <span><slot name="genero"></slot></span>
       </div>
       <div>
-        <p v-if="$slots.descripcion">
+        <p class="whitespace-normal wrap-break-word" v-if="$slots.descripcion">
           <slot name="descripcion"></slot>
         </p>
       </div>
