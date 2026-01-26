@@ -1,11 +1,13 @@
 <script setup>
 import { useCounterStore } from '@/stores/counter.js'
-import TarjetaBase from './TarjetaBase.vue'
+import TarjetaBase from '../TarjetaBase.vue'
 const store = useCounterStore()
+defineEmits(['abrirModal'])
 </script>
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-8">
-    <tarjeta-base v-for="(evento, index) in store.listaEventos" :key="index">
+    <tarjeta-base v-for="(evento, index) in store.listaEventos" :key="index" @click="$emit('abrirModal', evento)"
+      class="cursor-pointer hover:shadow-xl transition">
       <template #image>
         <img class="h-48 w-full object-cover" :src="evento.image" alt="Imagen del evento" />
       </template>

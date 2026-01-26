@@ -1,7 +1,18 @@
 <script setup>
 import { useCounterStore } from '@/stores/counter'
-import TarjetaEvento from '@/components/Videojuegos/TarjetaEvento.vue'
+import { ref } from 'vue'
+import TarjetaEvento from '@/components/Eventos/TarjetaEvento.vue'
+import DialogoEvento from '@/components/Eventos/DialogoEvento.vue'
 const store = useCounterStore()
+
+const eventoSeleccionado = ref(null);
+const abrirElModal = (eventoClickado) => {
+  eventoSeleccionado.value = eventoClickado;
+};
+const cerrarElModal = () => {
+  eventoSeleccionado.value = null;
+};
+
 </script>
 <template>
   <div class="flex flex-col sm:flex-row gap-5 py-4">
@@ -11,13 +22,12 @@ const store = useCounterStore()
         {{ tipo }}
       </option>
     </select>
-    <input type="date" class="border-2 border-green-400 rounded-lg px-2"/>
+    <input type="date" class="border-2 border-green-400 rounded-lg px-2" />
     <div>
-      <input type="checkbox" id="checkPlazas" /><label for="checkPlazas"
-        >Mostrar solo con plazas libres</label
-      >
+      <input type="checkbox" id="checkPlazas" /><label for="checkPlazas">Mostrar solo con plazas libres</label>
     </div>
   </div>
-  <tarjeta-evento />
+  <tarjeta-evento @abrirModal="abrirElModal" />
+  <DialogoEvento v-if="eventoSeleccionado" :evento="eventoSeleccionado" @cerrar="cerrarElModal" />
 </template>
 <style scoped></style>
