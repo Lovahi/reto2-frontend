@@ -7,7 +7,7 @@
     
     <div class="flex items-center justify-center">
       <img 
-        src="../assets/sources/img/Gemini_Generated_Image_segyufsegyufsegy-Photoroom.png" 
+        src="../assets/Gemini_Generated_Image_segyufsegyufsegy-Photoroom.png" 
         alt="Logo" 
         class="max-w-[100px] mr-5"
       >
