@@ -1,68 +1,21 @@
 <template>
-  <div id="navbar">
-      <div class="logo-wrapper">
-        <img src="../assets/Gemini_Generated_Image_segyufsegyufsegy-Photoroom.png" alt="Logo" class="logo-gaming">
-        <p>GameFest</p>
+  <nav id="navbar" class="flex justify-between items-center bg-[#4ab491] h-10 px-5 rounded-[10px] w-[95%] mt-[1%] ml-[2.5%]">
+      
+      <div class="flex items-center gap-[10px] h-full">
+        <img 
+          src="../assets/Gemini_Generated_Image_segyufsegyufsegy-Photoroom.png" 
+          alt="Logo" 
+          class="h-[60px] w-auto mix-blend-multiply contrast-[1.1]"
+        >
+        <p class="text-azure text-xl">GameFest</p>
       </div>
       
-      <div class="login">
+      <div class="flex flex-row items-center gap-[10px] text-white">
           <i class="pi pi-user"></i>
-          <button class="btn-login">Login</button>
+          <button class="bg-white text-[#4ab491] px-[15px] py-[5px] rounded hover:bg-gray-100 transition-colors">
+            Login
+          </button>
       </div>
-  </div>
+
+  </nav>
 </template>
-
-<script setup>
-
-</script>
-
-<style scoped>
-  #navbar {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    background-color: rgb(74, 180, 145);
-    height: 40px;
-    padding: 0 20px;
-    border-radius: 10px;
-    width: 95%;
-    margin-top: 1%;
-    margin-left: 2.5%;
-    
-  }
-
-  .logo-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    height: 100%;
-  }
-
-  .logo-gaming {
-    height: 60px;
-    width: auto;
-    mix-blend-mode: multiply;
-    filter: contrast(1.1);
-  }
-
-  .logo-wrapper p{
-    color: azure;
-    font-size: larger;
-  }
-
-  .login {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    color: white;
-  }
-
-  .btn-login {
-    background: white;
-    color: rgb(74, 180, 145);
-    padding: 5px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-</style>
