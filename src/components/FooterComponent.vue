@@ -3,70 +3,27 @@
 </script>
 
 <template>
-<footer class="footer">
-    <div class="footer-info">
-        <img src="../assets/Gemini_Generated_Image_segyufsegyufsegy-Photoroom.png" alt="">
-        <ul>
-            <li>about</li>
-            <li>contact</li>
-            <li>privacy policy</li>
-        </ul>
+  <footer class="flex justify-between items-center bg-[#4ab491] text-white py-5 h-[60px]">
+    
+    <div class="flex items-center justify-center">
+      <img 
+        src="../assets/sources/img/Gemini_Generated_Image_segyufsegyufsegy-Photoroom.png" 
+        alt="Logo" 
+        class="max-w-[100px] mr-5"
+      >
+      <ul class="flex justify-center list-none gap-[10px] p-0">
+        <li class="capitalize cursor-pointer hover:underline">about</li>
+        <li class="capitalize cursor-pointer hover:underline">contact</li>
+        <li class="capitalize cursor-pointer hover:underline">privacy policy</li>
+      </ul>
     </div>
-    <div class="footer-social">
-        <i class="pi pi-facebook"></i>
-        <i class="pi pi-linkedin"></i>
-        <i class="pi pi-instagram"></i>
-        <i class="pi pi-youtube"></i>
+
+    <div class="flex justify-center mr-[40%]">
+      <i class="pi pi-facebook flex mx-[10px] text-[24px] cursor-pointer hover:opacity-80"></i>
+      <i class="pi pi-linkedin flex mx-[10px] text-[24px] cursor-pointer hover:opacity-80"></i>
+      <i class="pi pi-instagram flex mx-[10px] text-[24px] cursor-pointer hover:opacity-80"></i>
+      <i class="pi pi-youtube flex mx-[10px] text-[24px] cursor-pointer hover:opacity-80"></i>
     </div>
-</footer>
+
+  </footer>
 </template>
-
-<style scoped>
-
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(74, 180, 145);
-    color: #fff;
-    padding: 20px 0;
-    height: 60px;
-}
-
-.footer-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   
-}
-
-.footer-info img {
-    max-width: 100px;
-    margin-right: 20px;
-}
-
-.footer-info ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    gap:10px;
-    padding: 0;
-
-}
-
-
-
-.footer-social {
-    display: flex;
-    justify-content: center;
-    margin-right: 40%;
-}
-
-.footer-social i {
-    display: flex;
-    margin: 0 10px;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-</style>
