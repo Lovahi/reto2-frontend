@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router'
 import NavbarComponent from './components/NavbarComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
+import Registro from './views/Registro.vue';
 </script>
 
 <template>
@@ -12,7 +13,7 @@ import FooterComponent from './components/FooterComponent.vue';
       <RouterView />
     </main>
 
-    <FooterComponent />
+    <FooterComponent /> 
 
   </div>
 </template>
