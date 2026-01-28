@@ -1,7 +1,7 @@
 <script setup>
-import { useCounterStore } from '@/stores/counter.js'
+import { useStore } from '@/stores/store.js'
 import TarjetaBase from '../TarjetaBase.vue'
-const store = useCounterStore()
+const store = useStore()
 defineEmits(['abrirModal'])
 </script>
 <template>

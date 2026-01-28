@@ -1,34 +1,12 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore('counter', () => {
-  const tiposEventos = ref(["presentación", "charla", "taller"]);
-  const listaJuegos = ref([
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      genero: 'XXXXXXXX',
-      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY',
-      plataformas: ["A, B, C"],
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      genero: 'XXXXXXXX',
-      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYYYYYYYYYYY',
-      plataformas: ["A, B, C"],
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      genero: 'XXXXXXXX',
-      descripcion: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY',
-      plataformas: ["A, B, C"],
-    },
-  ])
+export const useStore = defineStore('store', () => {
+  const tiposEventos = ref(['presentación', 'charla', 'taller'])
+  const listaJuegos = ref([])
+  const filtro = ref('')
+  const paginasGames = ref(0)
+
   const listaEventos = ref([
     {
       image:
@@ -143,14 +121,43 @@ export const useCounterStore = defineStore('counter', () => {
       plazas: 40,
     },
   ])
-  /*   const cargarEventos = async () => {
+
+  const cargarContador = async () => {
+    const res = await fetch('http://localhost:8000/api/games/counter/total')
+    const datos = await res.json()
+
+    paginasGames.value = (datos.total % 9 === 0) ? datos.total / 9 : Math.floor(datos.total / 9) + 1;
+  }
+
+  const cargarJuegos = async (paginaActual = 1) => {
+    // Definimos la URL dependiendo de si hay filtro o no
+    const url =
+      filtro.value === ''
+        ? `http://localhost:8000/api/games/page/${paginaActual}`
+        : `http://localhost:8000/api/games/name/${filtro.value}`
+
     try {
-      const response = await fetch('https://api.tusitio.com/eventos')
+      const response = await fetch(url)
+
+      if (!response.ok) {
+        throw new Error(`Error en el servidor: ${response.status}`)
+      }
+
       const datos = await response.json()
-      listaEventos.value = datos
+
+      listaJuegos.value = Array.isArray(datos) ? datos : []
     } catch (error) {
-      console.error("Error cargando eventos:", error)
+      console.error('Error al obtener los videojuegos:', error)
+      listaJuegos.value = []
     }
-  } */
-  return { listaEventos, listaJuegos, tiposEventos }
+  }
+  return {
+    tiposEventos,
+    listaJuegos,
+    filtro,
+    listaEventos,
+    paginasGames,
+    cargarJuegos,
+    cargarContador,
+  }
 })
