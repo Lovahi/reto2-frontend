@@ -6,7 +6,7 @@ export const useStore = defineStore('store', () => {
   const listaJuegos = ref([])
   const filtro = ref('')
   const paginasGames = ref(0)
-
+  const videoJuegoActual = ref({})
   const listaEventos = ref([
     {
       image:
@@ -151,13 +151,20 @@ export const useStore = defineStore('store', () => {
       listaJuegos.value = []
     }
   }
+  const devolverVideoJuego = (titulo) => {
+    console.log
+    videoJuegoActual.value = listaJuegos.value.find(elemento => elemento.title === titulo);
+    console.log(videoJuegoActual.value);
+  }
   return {
     tiposEventos,
     listaJuegos,
     filtro,
     listaEventos,
     paginasGames,
+    videoJuegoActual,
     cargarJuegos,
     cargarContador,
+    devolverVideoJuego
   }
 })

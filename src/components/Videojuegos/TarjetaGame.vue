@@ -2,11 +2,8 @@
 import { onMounted } from 'vue'
 import TarjetaBase from '../TarjetaBase.vue'
 import { useStore } from '@/stores/store'
-
 const store = useStore()
-
 defineEmits(['abrirModal'])
-
 onMounted(() => {
   store.cargarJuegos();
   store.cargarContador();
@@ -19,7 +16,7 @@ onMounted(() => {
       <tarjeta-base
         v-for="(juego, index) in store.listaJuegos"
         :key="index"
-        @click="$emit('abrirModal', juego)"
+        @click="$emit('abrirModal', juego); store.devolverVideoJuego(juego.title)"
       >
         <template #image>
           <img class="h-48 w-full object-cover" :src="juego.image" alt="Imagen del videojuego" />
