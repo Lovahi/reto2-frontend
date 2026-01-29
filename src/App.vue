@@ -13,8 +13,7 @@ import Registro from './views/Registro.vue';
     <main class="flex-1 relative pt-24 px-4">
       <RouterView />
     </main>
-
-    <Login /> 
+    
 
     <FooterComponent /> 
 

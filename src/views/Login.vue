@@ -15,7 +15,7 @@
     <button type="submit" class="mx-[10px] p-[10px] text-center rounded-[5px] bg-[#0aabf6] text-white hover:bg-[#336176] transition-colors">Iniciar sesión</button>
     </div>
   <div class="flex items-start mb-5">
-    <p class="ms-2 text-sm font-medium text-heading select-none">Aun no tienes cuenta?<a href="#" class="text-fg-brand text-white"> registrate</a>.</p>
+    <p class="ms-2 text-sm font-medium text-heading select-none">Aun no tienes cuenta?<RouterLink to="/registro" class="text-fg-brand text-white"> registrate</RouterLink>.</p>
   </div>
   </div>
 </form>
