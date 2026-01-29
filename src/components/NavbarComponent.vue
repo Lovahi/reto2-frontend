@@ -20,10 +20,10 @@ import { RouterLink } from 'vue-router';
 
     <div class="flex flex-row items-center gap-[10px] text-white">
       <i class="pi pi-user text-xl"></i>
-      <button
+      <RouterLink to="/login"
         class="bg-white text-[#4ab491] px-[15px] py-[5px] rounded font-bold hover:bg-gray-100 transition-colors shadow-sm">
         Login
-      </button>
+      </RouterLink>
     </div>
 
   </nav>

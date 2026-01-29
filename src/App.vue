@@ -2,6 +2,8 @@
 import { RouterView } from 'vue-router'
 import NavbarComponent from './components/NavbarComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
+import Login from './views/Login.vue';
+import Registro from './views/Registro.vue';
 </script>
 
 <template>
@@ -11,8 +13,9 @@ import FooterComponent from './components/FooterComponent.vue';
     <main class="flex-1 relative pt-24 px-4">
       <RouterView />
     </main>
+    
 
-    <FooterComponent />
+    <FooterComponent /> 
 
   </div>
 </template>
