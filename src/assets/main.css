@@ -15,9 +15,7 @@ html, body {
   width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
-  
-  /* CAMBIO IMPORTANTE AQUÍ: */
-  display: flex !important;           /* Activamos Flexbox a la fuerza */
+    display: flex !important;           /* Activamos Flexbox a la fuerza */
   flex-direction: column !important;  /* Ordenamos en vertical a la fuerza */
-  
-  min-height: 100vh;}
+  min-height: 100vh;
+}
