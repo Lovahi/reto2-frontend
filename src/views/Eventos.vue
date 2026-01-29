@@ -1,9 +1,9 @@
 <script setup>
-import { useCounterStore } from '@/stores/counter'
+import { useStore } from '@/stores/store'
 import { ref } from 'vue'
 import TarjetaEvento from '@/components/Eventos/TarjetaEvento.vue'
 import DialogoEvento from '@/components/Eventos/DialogoEvento.vue'
-const store = useCounterStore()
+const store = useStore()
 
 const eventoSeleccionado = ref(null);
 const abrirElModal = (eventoClickado) => {
