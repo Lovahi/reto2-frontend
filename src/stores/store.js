@@ -134,7 +134,7 @@ export const useStore = defineStore('store', () => {
     const url =
       filtro.value === ''
         ? `http://localhost:8000/api/games/page/${paginaActual}`
-        : `http://localhost:8000/api/games/name/${filtro.value}`
+        : `http://localhost:8000/api/games/name/${filtro.value.toLowerCase()}`
 
     try {
       const response = await fetch(url)
