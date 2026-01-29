@@ -23,7 +23,7 @@
         <input type="password" id="confirm-password" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-md focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body" placeholder="" required />
     </div>
     <button type="submit" class="w-full text-black bg-[#4ab491] hover:bg-brand-dark focus:ring-4 focus:outline-none focus:ring-brand font-bold rounded-md text-lg px-5 py-2.5 text-center shadow-sm">Registrarse</button>
-    <p class="text-[#4ab491]">ya tienes cuenta? <a href="#" class="text-white">Iniciar sesión</a></p>
+    <p class="text-[#4ab491]">ya tienes cuenta? <RouterLink to="/login" class="text-white">Iniciar sesión</RouterLink></p>
     </div>
 </form>
 

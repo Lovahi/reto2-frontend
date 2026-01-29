@@ -7,9 +7,9 @@
       </div>
   
       <div class="mt-5">
-        <button class="mx-[10px] p-[10px] text-center rounded-[5px] text-[#4ab491] bg-white border border-[#4ab491] hover:bg-gray-50 transition-colors">
+        <RouterLink to="/login" class="mx-[10px] p-[10px] text-center rounded-[5px] text-[#4ab491] bg-white border border-[#4ab491] hover:bg-gray-50 transition-colors">
           Iniciar sesion
-        </button>
+        </RouterLink>
         <RouterLink to="/registro" class="mx-[10px] p-[10px] text-center rounded-[5px] bg-[#4ab491] text-white hover:bg-[#3d9679] transition-colors">
           Registrarse
         </RouterLink>
