@@ -3,7 +3,7 @@
       
       <div class="flex flex-col gap-[30px] text-center text-[xx-large]">
         <h1 class="text-[#4ab491] font-bold">GameFest!</h1>
-        <p class="text-gray-600">Explora el mundo virtual!</p>
+        <p class="text-gray-600"></p>
       </div>
   
       <div class="mt-5">
