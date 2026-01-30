@@ -267,9 +267,9 @@ export const useStore = defineStore('store', () => {
     listaEventos,
     paginasGames,
     videoJuegoActual,
-    misInscripciones, // <--- EXPORTAR
-    estoyInscrito,    // <--- EXPORTAR
-    cargarMisInscripciones, // <--- EXPORTAR
+    misInscripciones, 
+    estoyInscrito,    
+    cargarMisInscripciones, 
     cargarJuegos,
     cargarContador,
     devolverVideoJuego,
