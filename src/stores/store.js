@@ -7,120 +7,9 @@ export const useStore = defineStore('store', () => {
   const filtro = ref('')
   const paginasGames = ref(0)
   const videoJuegoActual = ref({})
-  const listaEventos = ref([
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-  ])
+  const misInscripciones = ref([])
+  const listaEventos = ref([])
+  const paginasEventos = ref(0)
 
   const cargarContador = async () => {
     const res = await fetch('http://localhost:8000/api/games/counter/total')
@@ -151,10 +40,125 @@ export const useStore = defineStore('store', () => {
       listaJuegos.value = []
     }
   }
+
+  const cargarEventos = async (paginaActual = 1) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/events?page=${paginaActual}`);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("DATOS RECIBIDOS DEL BACKEND:", data[0]);
+        listaEventos.value = Array.isArray(data) ? data : [];
+      }
+    } catch (error) {
+      console.error("Error cargando eventos:", error);
+      listaEventos.value = [];
+    }
+  }
+
+  // 2. CONTADOR DE EVENTOS (Para saber el total de páginas)
+  const cargarContadorEventos = async () => {
+    try {
+      const res = await fetch('http://localhost:8000/api/events/pages');
+      const datos = await res.json();
+      const eventosPorPagina = 9;
+      paginasEventos.value = Math.ceil(datos.total / eventosPorPagina);
+    } catch (e) { console.error(e); }
+  }
+
   const devolverVideoJuego = (titulo) => {
     console.log
     videoJuegoActual.value = listaJuegos.value.find(elemento => elemento.title === titulo);
     console.log(videoJuegoActual.value);
+  }
+
+  const estoyInscrito = (eventoId) => {
+    return misInscripciones.value.includes(eventoId);
+  }
+
+  const cargarMisInscripciones = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/users/${userId}/events`, {
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // El backend devuelve objetos, nosotros extraemos solo los IDs de los eventos
+        // Transformamos [{user_id: 1, event_id: 5}, ...] en [5, ...]
+        misInscripciones.value = data.map(item => item.event_id);
+      }
+    } catch (e) {
+      console.error("Error cargando inscripciones", e);
+    }
+  }
+
+  // --- 3. INSCRIBIRSE ---
+  const inscribirse = async (eventoId) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/events/${eventoId}/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return { success: false, message: data.error || 'Error al inscribirse' };
+      }
+
+      // ÉXITO: Actualizamos la lista paralela y las plazas visuales
+      if (!misInscripciones.value.includes(eventoId)) {
+        misInscripciones.value.push(eventoId); // Añado el ID a mi lista
+      }
+
+      const evento = listaEventos.value.find(e => e.id === eventoId);
+      if (evento) {
+        evento.availablePlaces--; // Resto plaza visualmente
+      }
+
+      return { success: true, message: data.message };
+
+    } catch (error) {
+      return { success: false, message: 'Error de conexión' };
+    }
+  }
+
+  // --- 4. DESAPUNTARSE ---
+  const desapuntarse = async (eventoId) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/events/${eventoId}/signup`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'include'
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        return { success: false, message: data.error || 'Error al desapuntarse' };
+      }
+
+      // ÉXITO: Quitamos el ID de la lista paralela
+      misInscripciones.value = misInscripciones.value.filter(id => id !== eventoId);
+
+      const evento = listaEventos.value.find(e => e.id === eventoId);
+      if (evento) {
+        evento.availablePlaces++; // Devuelvo la plaza visualmente
+      }
+
+      return { success: true, message: data.message };
+
+    } catch (error) {
+      return { success: false, message: 'Error de conexión' };
+    }
   }
   return {
     tiposEventos,
@@ -163,8 +167,18 @@ export const useStore = defineStore('store', () => {
     listaEventos,
     paginasGames,
     videoJuegoActual,
+    misInscripciones,
+    estoyInscrito,
+    cargarMisInscripciones,
     cargarJuegos,
+    cargarContadorEventos,
+    cargarEventos,
     cargarContador,
-    devolverVideoJuego
+    devolverVideoJuego,
+    inscribirse,
+    desapuntarse
   }
+
+
+
 })
