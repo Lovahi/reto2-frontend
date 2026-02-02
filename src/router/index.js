@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/Vistahome.vue' 
-import Videojuegos from '../views/Videojuegos.vue'
-import Eventos from '../views/Eventos.vue' 
-import Login from '../views/Login.vue'
-import Registro from '../views/Registro.vue'
+import HomeView from '../views/HomeView.vue'
+import GamesView from '../views/GamesView.vue'
+import EventsView from '../views/EventsView.vue'
+import LoginView from '../views/LoginView.vue'
+import RegisterView from '../views/RegisterView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,29 +11,29 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
     },
     {
-      path: '/videojuegos', 
-      name: 'videojuegos',
-      component: Videojuegos 
+      path: '/games',
+      name: 'games',
+      component: GamesView,
     },
     {
-      path: '/eventos',
-      name: 'eventos',
-      component: Eventos
+      path: '/events',
+      name: 'events',
+      component: EventsView,
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: LoginView,
     },
     {
-      path: '/registro',
-      name: 'registro',
-      component: Registro
-    }
-  ]
+      path: '/register',
+      name: 'register',
+      component: RegisterView,
+    },
+  ],
 })
 
 export default router
