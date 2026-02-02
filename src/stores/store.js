@@ -8,134 +8,8 @@ export const useStore = defineStore('store', () => {
   const paginasGames = ref(0)
   const videoJuegoActual = ref({})
   const misInscripciones = ref([])
-  const listaEventos = ref([
-    {
-      id: 1,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      id: 2,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      id: 3,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      id: 4,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      id: 5,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      id: 6,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      id: 7,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      id: 8,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      id: 9,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      id: 10,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      id: 11,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      id: 12,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-    {
-      id: 13,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'AAAAA',
-      fecha: '19-07-1996',
-      hora: '19:50',
-      plazas: 150,
-    },
-    {
-      id: 14,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Boujad%2C_Platz.JPG/1280px-Boujad%2C_Platz.JPG',
-      titulo: 'BBBBB',
-      fecha: '03-07-1995',
-      hora: '19:30',
-      plazas: 40,
-    },
-  ])
+  const listaEventos = ref([])
+  const paginasEventos = ref(0)
 
   const cargarContador = async () => {
     const res = await fetch('http://localhost:8000/api/games/counter/total')
@@ -166,6 +40,32 @@ export const useStore = defineStore('store', () => {
       listaJuegos.value = []
     }
   }
+
+  const cargarEventos = async (paginaActual = 1) => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/events?page=${paginaActual}`);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("DATOS RECIBIDOS DEL BACKEND:", data[0]);
+        listaEventos.value = Array.isArray(data) ? data : [];
+      }
+    } catch (error) {
+      console.error("Error cargando eventos:", error);
+      listaEventos.value = [];
+    }
+  }
+
+  // 2. CONTADOR DE EVENTOS (Para saber el total de páginas)
+  const cargarContadorEventos = async () => {
+    try {
+      const res = await fetch('http://localhost:8000/api/events/pages');
+      const datos = await res.json();
+      const eventosPorPagina = 9;
+      paginasEventos.value = Math.ceil(datos.total / eventosPorPagina);
+    } catch (e) { console.error(e); }
+  }
+
   const devolverVideoJuego = (titulo) => {
     console.log
     videoJuegoActual.value = listaJuegos.value.find(elemento => elemento.title === titulo);
@@ -219,7 +119,7 @@ export const useStore = defineStore('store', () => {
 
       const evento = listaEventos.value.find(e => e.id === eventoId);
       if (evento) {
-        evento.plazas--; // Resto plaza visualmente
+        evento.availablePlaces--; // Resto plaza visualmente
       }
 
       return { success: true, message: data.message };
@@ -251,7 +151,7 @@ export const useStore = defineStore('store', () => {
 
       const evento = listaEventos.value.find(e => e.id === eventoId);
       if (evento) {
-        evento.plazas++; // Devuelvo la plaza visualmente
+        evento.availablePlaces++; // Devuelvo la plaza visualmente
       }
 
       return { success: true, message: data.message };
@@ -267,10 +167,12 @@ export const useStore = defineStore('store', () => {
     listaEventos,
     paginasGames,
     videoJuegoActual,
-    misInscripciones, 
-    estoyInscrito,    
-    cargarMisInscripciones, 
+    misInscripciones,
+    estoyInscrito,
+    cargarMisInscripciones,
     cargarJuegos,
+    cargarContadorEventos,
+    cargarEventos,
     cargarContador,
     devolverVideoJuego,
     inscribirse,
