@@ -1,22 +1,18 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import NavbarComponent from './components/NavbarComponent.vue';
-import FooterComponent from './components/FooterComponent.vue';
-import Login from './views/Login.vue';
-import Registro from './views/Registro.vue';
+import NavbarComponent from './components/NavbarComponent.vue'
+import FooterComponent from './components/FooterComponent.vue'
 </script>
 
 <template>
-  <div id="app" class="min-h-screen flex flex-col bg-gray-800 text-black font-sans">
+  <div id="app" class="min-h-screen flex flex-col text-black font-sans">
     <NavbarComponent />
 
-    <main class="flex-1 relative pt-24 px-4">
+    <main class="flex-1 relative">
       <RouterView />
     </main>
-    
 
-    <FooterComponent /> 
-
+    <FooterComponent />
   </div>
 </template>
 

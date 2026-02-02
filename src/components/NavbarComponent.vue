@@ -88,8 +88,8 @@ onUnmounted(() => {
       class="hidden md:flex gap-10 text-[var(--text-main)] text-sm font-bold uppercase tracking-widest"
     >
       <RouterLink to="/" class="nav-link">Inicio</RouterLink>
-      <RouterLink to="/videojuegos" class="nav-link">Juegos</RouterLink>
-      <RouterLink to="/eventos" class="nav-link">Eventos</RouterLink>
+      <RouterLink to="/games" class="nav-link">Juegos</RouterLink>
+      <RouterLink to="/events" class="nav-link">Eventos</RouterLink>
     </div>
 
     <div class="flex items-center gap-4">

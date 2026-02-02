@@ -5,8 +5,8 @@ import { useStore } from '@/stores/store'
 const store = useStore()
 defineEmits(['abrirModal'])
 onMounted(() => {
-  store.cargarJuegos();
-  store.cargarContador();
+  store.cargarJuegos()
+  store.cargarContador()
 })
 </script>
 
@@ -16,7 +16,7 @@ onMounted(() => {
       <tarjeta-base
         v-for="(juego, index) in store.listaJuegos"
         :key="index"
-        @click="$emit('abrirModal', juego); store.devolverVideoJuego(juego.title)"
+        @click="($emit('abrirModal', juego), store.devolverVideoJuego(juego.title))"
       >
         <template #image>
           <img class="h-48 w-full object-cover" :src="juego.image" alt="Imagen del videojuego" />
@@ -37,7 +37,14 @@ onMounted(() => {
       </tarjeta-base>
     </div>
     <div class="flex flex-row gap-10">
-      <button class="bg-white border-black border-2 p-5 rounded-lg" v-for="numero in store.paginasGames" @click="store.cargarJuegos(numero)">{{ numero }}</button>
+      <button
+        class="bg-white border-black border-2 p-5 rounded-lg"
+        v-for="numero in store.paginasGames"
+        :key="numero"
+        @click="store.cargarJuegos(numero)"
+      >
+        {{ numero }}
+      </button>
     </div>
   </div>
   <div v-else class="text-center text-white py-10">
