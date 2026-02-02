@@ -1,8 +1,12 @@
 <script setup>
-// Necesitamos importar esto para que los enlaces funcionen
 import { RouterLink } from 'vue-router';
 import { ref } from 'vue';
+
 const isOpen = ref(false);
+
+// Esta variable simula si el usuario está logeado. 
+// Cámbiala a 'true' para probar cómo se ve cuando estás dentro.
+const isLoggedIn = ref(false); 
 </script>
 
 <template>
@@ -15,7 +19,8 @@ const isOpen = ref(false);
         <img src="../assets/sources/img/Gemini_Generated_Image_segyufsegyufsegy-Photoroom.png" 
              alt="Logo"
              class="h-[50px] w-auto mix-blend-multiply contrast-[1.1]">
-        <p class="text-white text-xl font-bold font-sans">GameFest</p>
+        <p class="hidden text-white text-xl font-bold font-sans md:block">GameFest</p>
+        <RouterLink to="/" class="text-white hover:text-emerald-100 md:hidden">Inicio</RouterLink>
       </div>
 
       <div class="hidden md:flex gap-8 text-white font-medium">
@@ -24,11 +29,16 @@ const isOpen = ref(false);
         <RouterLink to="/eventos" class="hover:text-emerald-100 transition-colors">Eventos</RouterLink>
       </div>
 
-      <div class="flex items-center gap-4 text-white">
+      <div class="flex justify-center items-center gap-6 text-white">
+        
+        <RouterLink v-if="isLoggedIn" to="/mis-eventos" class="hover:text-emerald-100 transition-colors font-semibold">
+          Mis eventos
+        </RouterLink>
+
         <RouterLink to="/login" class="flex items-center hover:text-emerald-100 transition-colors">
           <i class="pi pi-user text-2xl"></i>
           <span class="hidden md:block ml-2 bg-white text-[#4ab491] px-[15px] py-[5px] rounded font-bold">
-            Login
+            {{ isLoggedIn ? 'Perfil' : 'Login' }}
           </span>
         </RouterLink>
 
@@ -42,6 +52,7 @@ const isOpen = ref(false);
       <RouterLink to="/" @click="isOpen = false" class="hover:text-emerald-100">Inicio</RouterLink>
       <RouterLink to="/videojuegos" @click="isOpen = false" class="hover:text-emerald-100">Juegos</RouterLink>
       <RouterLink to="/eventos" @click="isOpen = false" class="hover:text-emerald-100">Eventos</RouterLink>
+      <RouterLink v-if="isLoggedIn" to="/mis-eventos" @click="isOpen = false" class="hover:text-emerald-100">Mis Eventos</RouterLink>
     </div>
   </nav>
 </template>
