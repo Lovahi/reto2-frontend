@@ -57,7 +57,7 @@ import { RouterLink } from 'vue-router'
         <p class="text-center text-sm text-gray-400">
           ¿No tienes cuenta?
           <RouterLink
-            to="/registro"
+            to="/register"
             class="text-white font-bold hover:text-(--primary) transition-colors"
             >Regístrate</RouterLink
           >

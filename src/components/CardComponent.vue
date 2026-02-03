@@ -3,7 +3,7 @@ import Card from 'primevue/card'
 
 defineProps({
   title: String,
-  subtitle: String,
+  badge: String,
   image: String,
   description: String,
   loading: Boolean,
@@ -12,7 +12,7 @@ defineProps({
 
 <template>
   <Card
-    class="group overflow-hidden bg-(--surface) border border-(--border-color)/40 rounded-xl transition-all duration-300 hover:border-(--primary)/50 hover:shadow-[0_4_12px_rgba(0,0,0,0.2),0_0_10px_rgba(255,139,0,0.1)] h-full flex flex-col"
+    class="group overflow-hidden bg-(--surface) border border-(--border-color)/40 rounded-xl transition-all duration-300 hover:border-(--primary)/50 hover:shadow-[0_4_12px_rgba(0,0,0,0.2),0_0_10px_rgba(255,139,0,0.1)] w-400px h-full flex flex-col"
   >
     <template #header>
       <div class="relative overflow-hidden aspect-video">
@@ -26,7 +26,13 @@ defineProps({
         ></div>
 
         <!-- Slot para badges flotantes -->
-        <div class="absolute top-3 right-3 flex flex-wrap gap-1.5 justify-end">
+        <div class="absolute bottom-1 flex flex-wrap p-3 gap-1.5 justify-end">
+          <span
+            v-if="badge"
+            class="px-2 py-0.5 bg-(--surface-2)/90 backdrop-blur-xs text-(--primary) text-[9px] font-black uppercase tracking-widest rounded border border-(--border-color)/30 shadow-lg"
+          >
+            {{ badge }}
+          </span>
           <slot name="image-overlay"></slot>
         </div>
       </div>
@@ -38,16 +44,6 @@ defineProps({
       >
         {{ title }}
       </h3>
-    </template>
-
-    <template #subtitle>
-      <div class="flex items-center gap-2">
-        <span
-          class="px-2 py-0.5 bg-(--surface-2) text-(--primary) text-[9px] font-black uppercase tracking-widest rounded border border-(--border-color)/30 inline-block"
-        >
-          {{ subtitle }}
-        </span>
-      </div>
     </template>
 
     <template #content>
@@ -87,10 +83,6 @@ defineProps({
   flex: 1;
 }
 :deep(.p-card-title) {
-  padding: 0;
-  margin: 0;
-}
-:deep(.p-card-subtitle) {
   padding: 0;
   margin: 0;
 }

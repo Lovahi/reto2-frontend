@@ -33,7 +33,8 @@ const closeModal = () => {
 }
 
 const handleAction = (event) => {
-  console.log('Inscribiéndose al evento:', event.title)
+  console.log('Inscribiéndose al evento:', event.id, event.title)
+  store.inscribirseEvento(event.id)
 }
 
 // --- HELPERS ---
@@ -75,22 +76,26 @@ onMounted(() => {
       <template #item="{ item }">
         <CardComponent
           :title="item.title"
-          :subtitle="item.type"
+          :badge="item.type"
           :image="getImageUrl(item)"
           :description="item.description"
         >
           <template #footer-extra>
-            <div class="flex flex-col gap-2 w-full text-[10px] font-bold uppercase tracking-tight">
-              <div class="flex items-center justify-between text-(--text-muted)">
-                <span><i class="pi pi-calendar mr-1 text-(--primary)"></i> {{ item.date }}</span>
-                <span><i class="pi pi-clock mr-1 text-(--primary)"></i> {{ item.hour }}</span>
-              </div>
-              <div class="flex items-center justify-between pt-2 border-t border-white/5">
-                <span class="text-(--primary)">Plazas Disponibles</span>
-                <span class="text-white bg-(--secondary) px-2 py-0.5 rounded-sm">{{
-                  item.availablePlaces
-                }}</span>
-              </div>
+            <div
+              class="px-2 py-0.5 bg-black/20 text-[10px] text-(--text-muted) border border-(--border-color) rounded uppercase font-bold"
+            >
+              <i class="pi pi-calendar mr-1 text-(--primary) align-middle"></i> {{ item.date }}
+            </div>
+            <div
+              class="px-2 py-0.5 bg-black/20 text-[10px] text-(--text-muted) border border-(--border-color) rounded uppercase font-bold"
+            >
+              <i class="pi pi-clock mr-1 text-(--primary) align-middle"></i> {{ item.hour }}
+            </div>
+            <div
+              class="px-2 py-0.5 bg-black/20 text-[10px] text-(--text-muted) border border-(--border-color) rounded uppercase font-bold"
+            >
+              <i class="pi pi-users mr-1 text-(--primary) align-middle"></i>
+              {{ item.availablePlaces }}
             </div>
           </template>
         </CardComponent>

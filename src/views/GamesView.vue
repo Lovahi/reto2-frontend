@@ -75,7 +75,7 @@ onMounted(() => {
       <template #item="{ item }">
         <CardComponent
           :title="item.title"
-          :subtitle="item.genre"
+          :badge="item.genre"
           :image="getImageUrl(item)"
           :description="item.description"
         >
@@ -83,7 +83,7 @@ onMounted(() => {
             <div
               v-for="plat in item.platforms"
               :key="plat"
-              class="px-2 py-0.5 bg-black/20 text-[10px] text-(--text-muted) border border-(--border-color) rounded uppercase font-bold"
+              class="px-2 py-0.5 bg-black/20 text-[10px] text-(--primary) border border-(--border-color) rounded uppercase font-bold"
             >
               {{ plat }}
             </div>
