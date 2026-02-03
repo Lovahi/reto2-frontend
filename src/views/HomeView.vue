@@ -14,7 +14,7 @@ import { RouterLink } from 'vue-router'
           class="w-full h-full object-cover scale-105 animate-slow-zoom"
         />
         <div
-          class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[var(--bg-color)]"
+          class="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-(--bg-color)"
         ></div>
       </div>
 
@@ -23,7 +23,7 @@ import { RouterLink } from 'vue-router'
         <h1
           class="text-7xl md:text-9xl font-black italic tracking-tighter text-white mb-4 uppercase animate-fade-up"
         >
-          Game<span class="text-[var(--primary)]">Fest</span>
+          Game<span class="text-(--primary)">Fest</span>
         </h1>
         <p
           class="text-xl md:text-2xl text-gray-300 mb-10 font-medium tracking-wide animate-fade-up delay-100"
@@ -34,7 +34,7 @@ import { RouterLink } from 'vue-router'
         <div class="flex flex-col sm:flex-row gap-5 justify-center animate-fade-up delay-200">
           <RouterLink
             to="/games"
-            class="px-10 py-4 bg-[var(--primary)] text-black font-black uppercase italic tracking-tighter rounded-full hover:scale-105 hover:bg-white transition-all shadow-[0_0_30px_rgba(255,139,0,0.4)]"
+            class="px-10 py-4 bg-(--primary) text-black font-black uppercase italic tracking-tighter rounded-full hover:scale-105 hover:bg-white transition-all shadow-[0_0_30px_rgba(255,139,0,0.4)]"
           >
             Explorar Juegos
           </RouterLink>
@@ -54,34 +54,34 @@ import { RouterLink } from 'vue-router'
     </section>
 
     <!-- FEATURES SECTION -->
-    <section class="py-24 px-6 md:px-20 bg-[var(--bg-color)]">
+    <section class="py-24 px-6 md:px-20 bg-(--bg-color)">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div
-          class="p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-color)] hover:border-[var(--primary)] transition-all duration-500 group"
+          class="p-8 rounded-3xl bg-(--surface) border border-(--border-color) hover:border-(--primary) transition-all duration-500 group"
         >
           <div
             class="w-16 h-16 rounded-2xl bg-black/20 flex items-center justify-center mb-6 transition-transform group-hover:scale-110 group-hover:rotate-3"
           >
-            <i class="pi pi-bolt text-4xl text-[var(--primary)]"></i>
+            <i class="pi pi-bolt text-4xl text-(--primary)"></i>
           </div>
           <h3 class="text-2xl font-black italic uppercase mb-2">Eventos Pro</h3>
           <p class="text-gray-400">Torneos, charlas y talleres con los mejores del sector.</p>
         </div>
 
         <div
-          class="p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-color)] hover:border-[var(--primary)] transition-all duration-500 group"
+          class="p-8 rounded-3xl bg-(--surface) border border-(--border-color) hover:border-(--primary) transition-all duration-500 group"
         >
           <div
             class="w-16 h-16 rounded-2xl bg-black/20 flex items-center justify-center mb-6 transition-transform group-hover:scale-110 group-hover:rotate-3"
           >
-            <i class="pi pi-users text-4xl text-[var(--secondary)]"></i>
+            <i class="pi pi-users text-4xl text-(--secondary)"></i>
           </div>
           <h3 class="text-2xl font-black italic uppercase mb-2">Comunidad</h3>
           <p class="text-gray-400">Conecta con otros jugadores y comparte tu pasión.</p>
         </div>
 
         <div
-          class="p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border-color)] hover:border-[var(--primary)] transition-all duration-500 group"
+          class="p-8 rounded-3xl bg-(--surface) border border-(--border-color) hover:border-(--primary) transition-all duration-500 group"
         >
           <div
             class="w-16 h-16 rounded-2xl bg-black/20 flex items-center justify-center mb-6 transition-transform group-hover:scale-110 group-hover:rotate-3"

@@ -1,59 +1,119 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useStore } from '@/stores/store'
-import { ref } from 'vue'
-import EventCard from '@/components/Eventos/TarjetaEvento.vue'
-import EventDialog from '@/components/Eventos/DialogoEvento.vue'
+import GridLayout from '@/layouts/GridLayout.vue'
+import CardComponent from '@/components/CardComponent.vue'
+import PaginatorComponent from '@/components/PaginatorComponent.vue'
+import DialogComponent from '@/components/DialogComponent.vue'
+import FilterComponent from '@/components/FilterComponent.vue'
+
 const store = useStore()
 
-const selectedEvent = ref(null)
-const openModal = (clickedEvent) => {
-  selectedEvent.value = clickedEvent
+// --- PAGINATION ---
+const first = ref(0)
+const rows = ref(9)
+
+const onPage = (event) => {
+  first.value = event.first
+  const page = event.page + 1
+  store.cargarEventos(page)
 }
+
+// --- MODAL LOGIC ---
+const isDialogVisible = ref(false)
+
+const openModal = async (clickedEvent) => {
+  isDialogVisible.value = true
+  await store.cargarEventoPorId(clickedEvent.id)
+}
+
 const closeModal = () => {
-  selectedEvent.value = null
+  isDialogVisible.value = false
+  store.eventoActual = {}
 }
+
+const handleAction = (event) => {
+  console.log('Inscribiéndose al evento:', event.title)
+}
+
+// --- HELPERS ---
+const getImageUrl = (evento) => {
+  if (evento.image && evento.image !== '') {
+    return `${import.meta.env.VITE_IMG_URL}/events/${evento.image}`
+  }
+  return `https://placehold.co/600x400/1a1d23/e10600?text=${encodeURIComponent(evento.title)}`
+}
+
+onMounted(() => {
+  store.cargarEventos()
+  store.cargarContador()
+})
 </script>
+
 <template>
-  <div class="container mx-auto p-4 md:p-10 pt-24">
-    <h1 class="text-4xl font-black italic text-[var(--primary)] mb-8 uppercase tracking-tighter">
+  <div class="container mx-auto p-4 md:p-10 pt-24 text-(--text-main)">
+    <h1
+      class="text-4xl font-black italic text-(--primary) mb-8 uppercase tracking-tighter text-center"
+    >
       Eventos Pro
     </h1>
 
-    <div
-      class="flex flex-col sm:flex-row gap-5 mb-10 bg-[var(--surface)] p-6 rounded-2xl border border-[var(--border-color)] items-center"
-    >
-      <div class="flex flex-col gap-2 w-full sm:w-auto">
-        <label class="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)]"
-          >Tipo de Evento</label
-        >
-        <select
-          class="bg-[var(--surface-2)] border border-[var(--border-color)] text-[var(--text-main)] rounded-lg px-4 py-2 outline-none focus:border-[var(--primary)] transition-colors"
-        >
-          <option value="">Todos los tipos</option>
-          <option v-for="(tipo, index) in store.tiposEventos" :key="index" :value="tipo">
-            {{ tipo }}
-          </option>
-        </select>
-      </div>
+    <!-- Nuevo Filtro Genérico -->
+    <FilterComponent
+      v-model="store.filtro"
+      v-model:selectedType="store.filtroTipo"
+      :types="store.tiposEventos"
+      placeholder="Buscar evento por título..."
+      :showDate="true"
+      v-model:dateModel="store.filtroFecha"
+      :showAvailable="true"
+      v-model:availableModel="store.filtroPlazas"
+      @filter="store.cargarEventos()"
+    />
 
-      <div class="flex flex-col gap-2 w-full sm:w-auto">
-        <label class="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)]"
-          >Fecha</label
+    <GridLayout :items="store.listaEventos" :loading="store.loading" @item-click="openModal">
+      <template #item="{ item }">
+        <CardComponent
+          :title="item.title"
+          :subtitle="item.type"
+          :image="getImageUrl(item)"
+          :description="item.description"
         >
-        <input
-          type="date"
-          class="bg-[var(--surface-2)] border border-[var(--border-color)] text-[var(--text-main)] rounded-lg px-4 py-2 outline-none focus:border-[var(--primary)] transition-colors"
+          <template #footer-extra>
+            <div class="flex flex-col gap-2 w-full text-[10px] font-bold uppercase tracking-tight">
+              <div class="flex items-center justify-between text-(--text-muted)">
+                <span><i class="pi pi-calendar mr-1 text-(--primary)"></i> {{ item.date }}</span>
+                <span><i class="pi pi-clock mr-1 text-(--primary)"></i> {{ item.hour }}</span>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-white/5">
+                <span class="text-(--primary)">Plazas Disponibles</span>
+                <span class="text-white bg-(--secondary) px-2 py-0.5 rounded-sm">{{
+                  item.availablePlaces
+                }}</span>
+              </div>
+            </div>
+          </template>
+        </CardComponent>
+      </template>
+
+      <template #pagination>
+        <PaginatorComponent
+          :first="first"
+          :rows="rows"
+          :totalRecords="store.totalEvents"
+          @page="onPage"
         />
-      </div>
+      </template>
+    </GridLayout>
 
-      <div class="flex items-center gap-3 mt-auto mb-1 text-[var(--text-main)]">
-        <input type="checkbox" id="checkPlazas" class="w-5 h-5 accent-[var(--primary)]" />
-        <label for="checkPlazas" class="text-sm font-medium">Solo con plazas libres</label>
-      </div>
-    </div>
-
-    <EventCard @abrirModal="openModal" />
-    <EventDialog v-if="selectedEvent" :evento="selectedEvent" @cerrar="closeModal" />
+    <!-- Dialogo Unificado -->
+    <DialogComponent
+      v-model:visible="isDialogVisible"
+      type="event"
+      :item="store.eventoActual"
+      :loading="store.loadingActual"
+      @close="closeModal"
+      @action="handleAction"
+    />
   </div>
 </template>
-<style scoped></style>
