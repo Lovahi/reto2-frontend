@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { ref, computed } from 'vue' 
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') || null)
@@ -19,7 +20,8 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('user')
   }
 
-  const isAuthenticated = () => !!token.value
+const isAuthenticated = computed(() => !!token.value)
+const isAdmin = computed(() => user.value?.role === 'ADMIN')
 
   return {
     token,
@@ -27,5 +29,6 @@ export const useAuthStore = defineStore('auth', () => {
     setAuth,
     clearAuth,
     isAuthenticated,
+    isAdmin,
   }
 })
