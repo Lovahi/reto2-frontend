@@ -1,22 +1,74 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useStore } from '@/stores/store'
+import { eventService } from '@/services/eventService'
 import GridLayout from '@/layouts/GridLayout.vue'
 import CardComponent from '@/components/CardComponent.vue'
 import PaginatorComponent from '@/components/PaginatorComponent.vue'
 import DialogComponent from '@/components/DialogComponent.vue'
 import FilterComponent from '@/components/FilterComponent.vue'
 
-const store = useStore()
+// --- STATE ---
+const listaEventos = ref([])
+const tiposEventos = ref(['presentación', 'charla', 'taller'])
+const loading = ref(false)
+const loadingActual = ref(false)
+const eventoActual = ref({})
+const totalEvents = ref(0)
+
+// Filters
+const filtro = ref('')
+const filtroTipo = ref('Todos')
+const filtroFecha = ref(null)
+const filtroPlazas = ref(false)
 
 // --- PAGINATION ---
 const first = ref(0)
 const rows = ref(9)
 
+const cargarContador = async () => {
+  try {
+    const resEvents = await eventService.getEventsCounter()
+    totalEvents.value = resEvents?.total || 0
+  } catch (error) {
+    console.error('Error al cargar contadores:', error)
+  }
+}
+
+const cargarEventos = async (page = 1) => {
+  loading.value = true
+  try {
+    let datos = await eventService.getEvents(page)
+
+    if (filtro.value) {
+      datos = datos.filter((e) => e.title.toLowerCase().includes(filtro.value.toLowerCase()))
+    }
+
+    if (filtroTipo.value && filtroTipo.value !== 'Todos') {
+      datos = datos.filter((e) => e.type === filtroTipo.value)
+    }
+
+    if (filtroPlazas.value) {
+      datos = datos.filter((e) => e.availablePlaces > 0)
+    }
+
+    if (filtroFecha.value) {
+      const selectedDate = new Date(filtroFecha.value).toISOString().split('T')[0]
+      datos = datos.filter((e) => e.date === selectedDate)
+    }
+
+    listaEventos.value = Array.isArray(datos) ? datos : []
+  } catch (error) {
+    console.error('Error al cargar eventos:', error)
+    listaEventos.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
 const onPage = (event) => {
   first.value = event.first
   const page = event.page + 1
-  store.cargarEventos(page)
+  cargarEventos(page)
 }
 
 // --- MODAL LOGIC ---
@@ -24,17 +76,29 @@ const isDialogVisible = ref(false)
 
 const openModal = async (clickedEvent) => {
   isDialogVisible.value = true
-  await store.cargarEventoPorId(clickedEvent.id)
+  loadingActual.value = true
+  try {
+    const res = await eventService.getEventById(clickedEvent.id)
+    eventoActual.value = res
+  } catch (error) {
+    console.error(`Error al cargar el evento ${clickedEvent.id}:`, error)
+    eventoActual.value = {}
+  } finally {
+    loadingActual.value = false
+  }
 }
 
 const closeModal = () => {
   isDialogVisible.value = false
-  store.eventoActual = {}
+  eventoActual.value = {}
 }
 
 const handleAction = (event) => {
-  console.log('Inscribiéndose al evento:', event.id, event.title)
-  store.inscribirseEvento(event.id)
+  if (eventoActual.value.isSignedUp) {
+    eventService.cancelEvent(event.id)
+  } else {
+    eventService.signupEvent(event.id)
+  }
 }
 
 // --- HELPERS ---
@@ -46,8 +110,8 @@ const getImageUrl = (evento) => {
 }
 
 onMounted(() => {
-  store.cargarEventos()
-  store.cargarContador()
+  cargarEventos()
+  cargarContador()
 })
 </script>
 
@@ -61,18 +125,18 @@ onMounted(() => {
 
     <!-- Nuevo Filtro Genérico -->
     <FilterComponent
-      v-model="store.filtro"
-      v-model:selectedType="store.filtroTipo"
-      :types="store.tiposEventos"
+      v-model="filtro"
+      v-model:selectedType="filtroTipo"
+      :types="tiposEventos"
       placeholder="Buscar evento por título..."
       :showDate="true"
-      v-model:dateModel="store.filtroFecha"
+      v-model:dateModel="filtroFecha"
       :showAvailable="true"
-      v-model:availableModel="store.filtroPlazas"
-      @filter="store.cargarEventos()"
+      v-model:availableModel="filtroPlazas"
+      @filter="cargarEventos()"
     />
 
-    <GridLayout :items="store.listaEventos" :loading="store.loading" @item-click="openModal">
+    <GridLayout :items="listaEventos" :loading="loading" @item-click="openModal">
       <template #item="{ item }">
         <CardComponent
           :title="item.title"
@@ -105,7 +169,7 @@ onMounted(() => {
         <PaginatorComponent
           :first="first"
           :rows="rows"
-          :totalRecords="store.totalEvents"
+          :totalRecords="totalEvents"
           @page="onPage"
         />
       </template>
@@ -115,8 +179,8 @@ onMounted(() => {
     <DialogComponent
       v-model:visible="isDialogVisible"
       type="event"
-      :item="store.eventoActual"
-      :loading="store.loadingActual"
+      :item="eventoActual"
+      :loading="loadingActual"
       @close="closeModal"
       @action="handleAction"
     />

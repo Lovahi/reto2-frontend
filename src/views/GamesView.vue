@@ -1,22 +1,62 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useStore } from '@/stores/store'
+import { gameService } from '@/services/gameService'
 import GridLayout from '@/layouts/GridLayout.vue'
 import CardComponent from '@/components/CardComponent.vue'
 import PaginatorComponent from '@/components/PaginatorComponent.vue'
 import DialogComponent from '@/components/DialogComponent.vue'
 import FilterComponent from '@/components/FilterComponent.vue'
 
-const store = useStore()
+// --- STATE ---
+const listaJuegos = ref([])
+const loading = ref(false)
+const loadingActual = ref(false)
+const videoJuegoActual = ref({})
+const totalGames = ref(0)
+
+// Filters
+const filtro = ref('')
+const filtroTipo = ref('Todos')
 
 // --- PAGINATION ---
 const first = ref(0)
 const rows = ref(9)
 
+const cargarContador = async () => {
+  try {
+    const resGames = await gameService.getGamesCounter()
+    totalGames.value = resGames?.total || 0
+  } catch (error) {
+    console.error('Error al cargar contadores:', error)
+  }
+}
+
+const cargarJuegos = async (page = 1) => {
+  loading.value = true
+  try {
+    let datos = await gameService.getAllGames(page)
+
+    if (filtro.value) {
+      datos = datos.filter((j) => j.title.toLowerCase().includes(filtro.value.toLowerCase()))
+    }
+
+    if (filtroTipo.value && filtroTipo.value !== 'Todos') {
+      datos = datos.filter((j) => j.genre === filtroTipo.value)
+    }
+
+    listaJuegos.value = Array.isArray(datos) ? datos : []
+  } catch (error) {
+    console.error('Error al obtener los videojuegos:', error)
+    listaJuegos.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
 const onPage = (event) => {
   first.value = event.first
   const page = event.page + 1
-  store.cargarJuegos(page)
+  cargarJuegos(page)
 }
 
 // --- MODAL LOGIC ---
@@ -24,12 +64,21 @@ const isDialogVisible = ref(false)
 
 const openModal = async (clickedGame) => {
   isDialogVisible.value = true
-  await store.cargarJuegoPorId(clickedGame.id)
+  loadingActual.value = true
+  try {
+    const res = await gameService.getGameById(clickedGame.id)
+    videoJuegoActual.value = res
+  } catch (error) {
+    console.error(`Error al cargar el juego ${clickedGame.id}:`, error)
+    videoJuegoActual.value = {}
+  } finally {
+    loadingActual.value = false
+  }
 }
 
 const closeModal = () => {
   isDialogVisible.value = false
-  store.videoJuegoActual = {}
+  videoJuegoActual.value = {}
 }
 
 const handleAction = (game) => {
@@ -38,7 +87,7 @@ const handleAction = (game) => {
 
 // --- HELPERS ---
 const genres = computed(() => {
-  const allGenres = store.listaJuegos.map((j) => j.genre)
+  const allGenres = listaJuegos.value.map((j) => j.genre)
   return [...new Set(allGenres)].filter(Boolean)
 })
 
@@ -50,8 +99,8 @@ const getImageUrl = (juego) => {
 }
 
 onMounted(() => {
-  store.cargarJuegos()
-  store.cargarContador()
+  cargarJuegos()
+  cargarContador()
 })
 </script>
 
@@ -64,14 +113,14 @@ onMounted(() => {
     </h1>
 
     <FilterComponent
-      v-model="store.filtro"
-      v-model:selectedType="store.filtroTipo"
+      v-model="filtro"
+      v-model:selectedType="filtroTipo"
       :types="genres"
       placeholder="Buscar videojuego..."
-      @filter="store.cargarJuegos()"
+      @filter="cargarJuegos()"
     />
 
-    <GridLayout :items="store.listaJuegos" :loading="store.loading" @item-click="openModal">
+    <GridLayout :items="listaJuegos" :loading="loading" @item-click="openModal">
       <template #item="{ item }">
         <CardComponent
           :title="item.title"
@@ -92,12 +141,7 @@ onMounted(() => {
       </template>
 
       <template #pagination>
-        <PaginatorComponent
-          :first="first"
-          :rows="rows"
-          :totalRecords="store.totalGames"
-          @page="onPage"
-        />
+        <PaginatorComponent :first="first" :rows="rows" :totalRecords="totalGames" @page="onPage" />
       </template>
     </GridLayout>
 
@@ -105,8 +149,8 @@ onMounted(() => {
     <DialogComponent
       v-model:visible="isDialogVisible"
       type="game"
-      :item="store.videoJuegoActual"
-      :loading="store.loadingActual"
+      :item="videoJuegoActual"
+      :loading="loadingActual"
       @close="closeModal"
       @action="handleAction"
     />
