@@ -2,59 +2,61 @@
 @import 'primeicons/primeicons.css';
 
 :root {
-  /* McLaren P1 Racing Palette */
+  /* McLaren P1 Racing Palette (Shared) */
   --primary: #ff8b00;
   --primary-hover: #ffad42;
   --secondary: #e10600;
   --secondary-hover: #ff1a1a;
 
-  /* Complementary Colors */
-  --accent-blue: #00f2ff;
-  --accent-purple: #9d00ff;
-
+  /* shared */
   --accent-mix: color-mix(in srgb, var(--primary), var(--secondary) 20%);
-
-  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-/* Light Mode (Default or when forced) */
+/* Default Light Mode (Refined) */
 :root,
-[data-theme='light'] {
-  --bg-color: #f1f5f9; /* Slate 100 - Fondo suave */
-  --surface: #ffffff;
-  --surface-2: #e2e8f0; /* Slate 200 */
-  --text-main: #1e293b; /* Slate 800 - Menos agresivo que el negro */
-  --text-muted: #64748b; /* Slate 500 */
-  --border-color: #cbd5e1; /* Slate 300 */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --shadow-color: rgba(0, 0, 0, 0.05);
+.light {
+  --bg-color: #f1f5f9; /* Slate 100 - Fondo más suave, no blanco puro */
+  --surface: #ffffff; /* Blanco puro para elevar las tarjetas del fondo */
+  --surface-2: #e2e8f0; /* Slate 200 - Para inputs y elementos secundarios */
+  --surface-3: #cbd5e1; /* Slate 300 - Para bordes o hovers marcados */
+
+  --text-main: #1e293b; /* Slate 800 - Un poco más suave que el negro total */
+  --text-muted: #475569; /* Slate 600 */
+  --text-dim: #64748b; /* Slate 500 */
+
+  --border-color: #cbd5e1; /* Slate 300 - Bordes más definidos para Light Mode */
+  --border-glow: rgba(255, 139, 0, 0.08);
+
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --shadow-color: rgba(15, 23, 42, 0.08);
+
+  /* PrimeVue Overrides */
+  --p-content-background: var(--bg-color);
+  --p-card-background: var(--surface);
+  --p-tabs-tabpanel-background: var(--bg-color);
+  --p-tabs-tablist-background: transparent;
+  --p-select-overlay-background: var(--surface);
+  --p-datepicker-panel-background: var(--surface);
 }
 
-/* Dark Mode definition (Class and Data Attribute) */
-.dark,
-[data-theme='dark'] {
-  --bg-color: #020617; /* Slate 950 - Fondo profundo */
-  --surface: #0f172a; /* Slate 900 - Superficie de tarjetas */
+/* Dark Mode Override */
+.dark {
+  --bg-color: #020617; /* Slate 950 */
+  --surface: #0f172a; /* Slate 900 */
   --surface-2: #1e293b; /* Slate 800 */
-  --text-main: #f1f5f9; /* Slate 100 - Blanco roto para lectura */
-  --text-muted: #94a3b8; /* Slate 400 */
-  --border-color: #1e293b; /* Slate 800 */
-  --glass-bg: rgba(15, 23, 42, 0.8);
-  --shadow-color: rgba(0, 0, 0, 0.4);
-}
+  --surface-3: #334155; /* Slate 700 */
 
-/* System Dark Mode (if no manual choice) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']):not([data-theme='dark']) {
-    --bg-color: #0f1115;
-    --surface: #1a1d23;
-    --surface-2: #242830;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --border-color: #334155;
-    --glass-bg: rgba(15, 17, 21, 0.7);
-    --shadow-color: rgba(0, 0, 0, 0.5);
-  }
+  --text-main: #f8fafc; /* Slate 50 */
+  --text-muted: #94a3b8; /* Slate 400 */
+  --text-dim: #64748b; /* Slate 500 */
+
+  --border-color: #1e293b; /* Slate 800 */
+  --border-glow: rgba(255, 139, 0, 0.2);
+
+  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(0, 0, 0, 0.4);
 }
 
 html,
@@ -73,6 +75,42 @@ body {
     system-ui,
     -apple-system,
     sans-serif;
+}
+
+/* Modern Scrollbar Style */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-2);
+  border-radius: 10px;
+  border: 2px solid var(--bg-color);
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Firefox Support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-2) var(--bg-color);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 #app {

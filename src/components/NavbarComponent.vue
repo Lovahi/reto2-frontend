@@ -1,42 +1,38 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore'
 
+const route = useRoute()
 const scrolled = ref(false)
 const hidden = ref(false)
 const menuOpen = ref(false)
-const currentTheme = ref('system') // 'light', 'dark', 'system'
+const isDark = ref(false)
+const authStore = useAuthStore()
+const isHomePage = computed(() => route.path === '/')
 let lastScrollPosition = 0
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  updateTheme()
+}
+
+const updateTheme = () => {
+  if (isDark.value) {
+    document.documentElement.classList.add('dark')
+    document.documentElement.classList.remove('light')
+    document.documentElement.setAttribute('data-theme', 'dark')
+    localStorage.setItem('theme', 'dark')
+  } else {
+    document.documentElement.classList.add('light')
+    document.documentElement.classList.remove('dark')
+    document.documentElement.setAttribute('data-theme', 'light')
+    localStorage.setItem('theme', 'light')
+  }
+}
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
-}
-
-const themes = {
-  light: { icon: 'pi-sun', next: 'dark', label: 'Claro' },
-  dark: { icon: 'pi-moon', next: 'system', label: 'Oscuro' },
-  system: { icon: 'pi-desktop', next: 'light', label: 'Sistema' },
-}
-
-const toggleTheme = () => {
-  const nextTheme = themes[currentTheme.value].next
-  applyTheme(nextTheme)
-}
-
-const applyTheme = (theme) => {
-  currentTheme.value = theme
-  localStorage.setItem('theme', theme)
-
-  const root = document.documentElement
-
-  if (theme === 'system') {
-    root.removeAttribute('data-theme')
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    root.classList.toggle('dark', isDark)
-  } else {
-    root.setAttribute('data-theme', theme)
-    root.classList.toggle('dark', theme === 'dark')
-  }
 }
 
 const handleScroll = () => {
@@ -53,8 +49,15 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
-  const savedTheme = localStorage.getItem('theme') || 'system'
-  applyTheme(savedTheme)
+
+  // Initialize theme from localStorage or default to Light
+  const savedTheme = localStorage.getItem('theme')
+  if (savedTheme) {
+    isDark.value = savedTheme === 'dark'
+  } else {
+    isDark.value = false // Light by default
+  }
+  updateTheme()
 })
 
 onUnmounted(() => {
@@ -66,10 +69,10 @@ onUnmounted(() => {
   <nav
     id="navbar"
     :class="[
-      'fixed left-1/2 -translate-x-1/2 z-50 flex justify-between items-center transition-all duration-500 ease-in-out px-6 md:px-8',
+      'fixed left-1/2 -translate-x-1/2 z-50 flex justify-between items-center transition-all duration-500 ease-in-out px-6 md:px-12',
       scrolled || menuOpen
         ? 'top-4 w-[92%] md:w-[85%] rounded-2xl md:rounded-full bg-(--glass-bg) backdrop-blur-md border border-(--glass-border) shadow-2xl'
-        : 'top-6 w-[95%] h-16 bg-transparent',
+        : 'top-6 md:top-12 w-[95%] h-16 bg-transparent',
       hidden && !menuOpen ? '-translate-y-32' : 'translate-y-0',
       scrolled || menuOpen ? 'h-14' : 'h-16',
     ]"
@@ -85,44 +88,65 @@ onUnmounted(() => {
           />
         </div>
         <p
-          class="text-(--text-main) text-base md:text-lg font-black tracking-tighter uppercase italic"
+          :class="[
+            'text-base md:text-lg font-black tracking-tighter uppercase italic',
+            isHomePage && !scrolled && !menuOpen ? 'text-white' : 'text-(--text-main)',
+          ]"
         >
           GameFest
         </p>
       </RouterLink>
     </div>
 
-    <!-- Desktop Menu -->
     <div
-      class="hidden md:flex gap-8 text-(--text-main) text-sm font-bold uppercase tracking-widest"
+      :class="[
+        'hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest',
+        isHomePage && !scrolled && !menuOpen ? 'text-white' : 'text-(--text-main)',
+      ]"
     >
       <RouterLink to="/" class="nav-link">Inicio</RouterLink>
       <RouterLink to="/games" class="nav-link">Juegos</RouterLink>
       <RouterLink to="/events" class="nav-link">Eventos</RouterLink>
+      <RouterLink
+        v-if="authStore.user?.role === 'ADMIN'"
+        to="/admin"
+        class="nav-link text-(--primary)!"
+        >Admin</RouterLink
+      >
     </div>
 
     <!-- Right Actions -->
     <div class="flex items-center gap-2 md:gap-4">
-      <!-- Theme Toggle -->
+      <!-- Theme Toggle Desktop -->
       <button
         @click="toggleTheme"
-        class="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-(--surface-2) text-(--text-main) border border-(--border-color) hover:border-(--primary) transition-all group"
+        :class="[
+          'hidden md:flex w-10 h-10 items-center justify-center rounded-full bg-(--surface-2)/50 border border-(--border-color)/50 hover:border-(--primary) transition-all',
+          isHomePage && !scrolled && !menuOpen ? 'text-white' : 'text-(--text-main)',
+        ]"
+        title="Cambiar tema"
       >
-        <i :class="['pi', themes[currentTheme].icon, 'text-xs md:text-base']"></i>
+        <i :class="['pi', isDark ? 'pi-moon' : 'pi-sun']"></i>
       </button>
 
       <!-- Login Button Desktop -->
       <RouterLink
-        to="/login"
-        class="hidden sm:flex relative overflow-hidden group px-5 py-2 rounded-full bg-(--primary) text-(--bg-color) font-black text-[10px] md:text-xs uppercase tracking-tighter transition-all"
+        :to="authStore.isAuthenticated() ? '/profile' : '/login'"
+        class="mobile-nav-link text-(--primary) font-black"
+        @click="menuOpen = false"
       >
-        Entrar
+        <i class="pi pi-user mr-3"></i>
+        {{
+          authStore.isAuthenticated() ? authStore.user?.username || 'Mi Cuenta' : 'Iniciar Sesión'
+        }}
       </RouterLink>
 
-      <!-- Hamburger Button (Mobile Only) -->
       <button
         @click="toggleMenu"
-        class="flex md:hidden w-9 h-9 items-center justify-center rounded-lg bg-(--surface-2) text-(--text-main) border border-(--border-color)"
+        :class="[
+          'flex md:hidden w-9 h-9 items-center justify-center rounded-lg bg-(--surface-2) border border-(--border-color)',
+          isHomePage && !scrolled && !menuOpen ? 'text-white' : 'text-(--text-main)',
+        ]"
       >
         <i :class="['pi', menuOpen ? 'pi-times' : 'pi-bars', 'text-sm']"></i>
       </button>
@@ -142,13 +166,30 @@ onUnmounted(() => {
       <RouterLink to="/events" class="mobile-nav-link" @click="menuOpen = false">
         <i class="pi pi-calendar mr-3 text-(--primary)"></i> Eventos
       </RouterLink>
+      <RouterLink
+        v-if="authStore.user?.role === 'ADMIN'"
+        to="/admin"
+        class="mobile-nav-link text-(--primary)!"
+        @click="menuOpen = false"
+      >
+        <i class="pi pi-shield mr-3"></i> Admin
+      </RouterLink>
+
+      <button @click="toggleTheme" class="mobile-nav-link">
+        <i :class="['pi', isDark ? 'pi-moon' : 'pi-sun', 'mr-3 text-(--primary)']"></i>
+        {{ isDark ? 'Modo Oscuro' : 'Modo Claro' }}
+      </button>
+
       <div class="h-px bg-(--border-color) my-2"></div>
       <RouterLink
-        to="/login"
+        :to="authStore.isAuthenticated() ? '/profile' : '/login'"
         class="mobile-nav-link text-(--primary) font-black"
         @click="menuOpen = false"
       >
-        <i class="pi pi-user mr-3"></i> Mi Cuenta
+        <i class="pi pi-user mr-3"></i>
+        {{
+          authStore.isAuthenticated() ? authStore.user?.username || 'Mi Cuenta' : 'Iniciar Sesión'
+        }}
       </RouterLink>
     </div>
   </nav>
@@ -166,7 +207,7 @@ onUnmounted(() => {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  background: var(--primary);
   transition: width 0.3s;
 }
 .nav-link:hover::after,

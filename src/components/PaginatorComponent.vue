@@ -43,7 +43,7 @@ defineEmits(['page'])
 :deep(.p-paginator-last) {
   background: transparent;
   color: var(--text-main);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--border-color);
   margin: 0 0.25rem;
   border-radius: 0.5rem;
   font-weight: 900;

@@ -21,7 +21,7 @@ defineEmits(['page-change', 'item-click'])
 </script>
 
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 my-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5 my-8">
     <!-- Slot para renderizar cada tarjeta -->
     <template v-for="(item, index) in items" :key="item.id || index">
       <div @click="$emit('item-click', item)" class="cursor-pointer h-full">
