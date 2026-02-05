@@ -82,19 +82,15 @@ onUnmounted(() => {
       <RouterLink to="/" class="flex items-center gap-3 group" @click="menuOpen = false">
         <div class="relative">
           <img
-            src="../assets/sources/img/Gemini_Generated_Image_segyufsegyufsegy-Photoroom.png"
+            src="../assets/logo.svg"
             alt="Logo"
             class="h-8 md:h-10 w-auto brightness-110 group-hover:scale-110 transition-transform"
           />
         </div>
-        <p
-          :class="[
-            'text-base md:text-lg font-black tracking-tighter uppercase italic',
-            isHomePage && !scrolled && !menuOpen ? 'text-white' : 'text-(--text-main)',
-          ]"
+        <span
+          class="text-(--text-main) text-2xl font-black tracking-tighter leading-none italic uppercase"
+          >GAME<span class="text-(--primary)">FEST</span></span
         >
-          GameFest
-        </p>
       </RouterLink>
     </div>
 
