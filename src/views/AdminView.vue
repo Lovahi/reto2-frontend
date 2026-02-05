@@ -401,6 +401,48 @@ const handleSubmit = async () => {
   color: var(--primary) !important;
 }
 
+/* Fix for DatePicker Panel visibility */
+:root .p-datepicker {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+:root .p-datepicker-header {
+  background: var(--surface) !important;
+  color: var(--text-main) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+:root .p-datepicker-calendar td > span {
+  color: var(--text-main) !important;
+}
+
+.dark :root .p-datepicker-calendar td > span,
+.dark :root .p-datepicker-calendar th > span {
+  color: #ffffff !important;
+}
+
+:root .p-datepicker-calendar td.p-datepicker-other-month > span {
+  color: var(--text-dim) !important;
+  opacity: 0.5;
+}
+
+:root .p-datepicker-title,
+:root .p-datepicker-month,
+:root .p-datepicker-year {
+  color: var(--text-main) !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  font-size: 0.8rem !important;
+}
+
+.dark :root .p-datepicker-title,
+.dark :root .p-datepicker-month,
+.dark :root .p-datepicker-year {
+  color: #ffffff !important;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;

@@ -30,14 +30,6 @@
   --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(0, 0, 0, 0.08);
   --shadow-color: rgba(15, 23, 42, 0.08);
-
-  /* PrimeVue Overrides */
-  --p-content-background: var(--bg-color);
-  --p-card-background: var(--surface);
-  --p-tabs-tabpanel-background: var(--bg-color);
-  --p-tabs-tablist-background: transparent;
-  --p-select-overlay-background: var(--surface);
-  --p-datepicker-panel-background: var(--surface);
 }
 
 /* Dark Mode Override */

@@ -121,6 +121,7 @@ const handleAction = async (event) => {
     if (index !== -1) {
       listaEventos.value[index] = updatedEvent
     }
+    closeModal()
   } catch (error) {
     if (
       error.message?.includes('Duplicate entry') ||
