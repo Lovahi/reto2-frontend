@@ -1,5 +1,4 @@
 <script setup>
-import ToggleSwitch from 'primevue/toggleswitch'
 import { ref, computed } from 'vue'
 
 const props = defineProps({
@@ -44,13 +43,15 @@ const config = computed(() => {
       accentColor: 'var(--primary)',
     }
   }
+  const isSignedUp = props.item?.isSignedUp
   return {
     badge: props.item?.type || 'Evento',
     badgeClass: 'bg-(--secondary)',
     imageFolder: 'events',
-    actionLabel: 'Confirmar Inscripción',
+    actionLabel: isSignedUp ? 'Cancelar Inscripción' : 'Confirmar Inscripción',
     descriptionLabel: 'Detalles del evento',
     accentColor: 'var(--secondary)',
+    isSignedUp,
   }
 })
 
@@ -93,9 +94,7 @@ const getImageUrl = (data) => {
             <!-- HERO SECTION -->
             <div class="relative h-64 md:h-80 overflow-hidden shrink-0">
               <img :src="getImageUrl(item)" class="w-full h-full object-cover" :alt="item.title" />
-              <div
-                class="absolute inset-0 bg-linear-to-t from-(--surface) via-(--surface)/20 to-transparent"
-              ></div>
+              <div class="absolute inset-0 bg-black/40"></div>
 
               <!-- Info Overlay -->
               <div class="absolute bottom-6 left-6 right-6">
@@ -172,7 +171,7 @@ const getImageUrl = (data) => {
                 </h4>
                 <div class="relative pl-6 py-2">
                   <div
-                    class="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-(--primary) to-(--secondary) rounded-full shadow-[0_0_10px_rgba(255,139,0,0.5)]"
+                    class="absolute left-0 top-0 bottom-0 w-1 bg-(--primary) rounded-full shadow-[0_0_10px_rgba(255,139,0,0.3)]"
                   ></div>
                   <p class="text-(--text-main) leading-relaxed text-lg italic opacity-90">
                     "{{ item.description }}"
@@ -180,41 +179,13 @@ const getImageUrl = (data) => {
                 </div>
               </div>
 
-              <!-- Action Footer -->
-              <div class="pt-8 border-t border-(--border-color)/40 space-y-5">
-                <template v-if="type === 'event'">
-                  <div
-                    class="flex items-center justify-between bg-(--surface-2)/40 p-5 rounded-2xl border border-(--border-color)/20 hover:bg-(--surface-2)/60 transition-colors"
-                  >
-                    <div class="flex items-center gap-4">
-                      <ToggleSwitch v-model="checked" />
-                      <div>
-                        <p class="text-sm font-black uppercase tracking-tighter">
-                          Confirmar Inscripción
-                        </p>
-                        <p class="text-[9px] text-(--text-muted) uppercase tracking-widest">
-                          Acepto los términos y condiciones
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </template>
-
-                <button
-                  :disabled="type === 'event' && !checked"
-                  @click="$emit('action', item)"
-                  class="w-full py-5 rounded-2xl font-black uppercase italic tracking-tighter text-sm transition-all duration-300 shadow-xl"
-                  :class="[
-                    type === 'event' && !checked
-                      ? 'bg-(--surface-2) text-(--text-muted) opacity-40 cursor-not-allowed'
-                      : 'bg-(--primary) text-black hover:scale-[1.01] hover:brightness-110 active:scale-95',
-                  ]"
-                >
-                  <span class="flex items-center justify-center gap-3">
-                    <i :class="[type === 'event' ? 'pi pi-check-circle' : 'pi pi-bolt']"></i>
-                    {{ config.actionLabel }}
-                  </span>
-                </button>
+              <!-- Action Footer (Conditional Slot) -->
+              <div v-if="$slots.footer" class="pt-8 border-t border-(--border-color)/40 space-y-5">
+                <slot
+                  name="footer"
+                  :checked="checked"
+                  :updateChecked="(val) => (checked = val)"
+                ></slot>
               </div>
             </div>
           </div>

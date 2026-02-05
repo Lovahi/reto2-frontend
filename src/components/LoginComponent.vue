@@ -21,16 +21,16 @@ const handleLogin = async () => {
       password: password.value,
     })
 
-    // El backend devuelve el UserDTO directamente en caso de éxito
-    if (response && response.id) {
+    // El backend devuelve { message: '...', user: {...} }
+    if (response && response.user) {
       // Como el backend usa sesiones de PHP, el token es simbólico para el frontend
-      authStore.setAuth('session-active', response)
+      authStore.setAuth('session-active', response.user)
       router.push('/')
     } else {
       error.value = 'Credenciales inválidas'
     }
   } catch (e) {
-    error.value = 'Error al iniciar sesión. Por favor, inténtelo de nuevo.'
+    error.value = e.message || 'Error al iniciar sesión. Por favor, inténtelo de nuevo.'
     console.error(e)
   } finally {
     loading.value = false
@@ -85,7 +85,7 @@ const handleLogin = async () => {
           v-model="password"
           type="password"
           id="password"
-          class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-gray-600"
+          class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-(--text-muted)/30"
           placeholder="••••••••"
           required
         />
@@ -100,11 +100,11 @@ const handleLogin = async () => {
         <span>{{ loading ? 'Iniciando...' : 'Iniciar Sesión' }}</span>
       </button>
 
-      <p class="text-center text-sm text-gray-400">
+      <p class="text-center text-sm text-(--text-muted)">
         ¿No tienes cuenta?
         <RouterLink
           to="/register"
-          class="text-white font-bold hover:text-(--primary) transition-colors"
+          class="text-(--text-main) font-bold hover:text-(--primary) transition-colors"
           >Regístrate</RouterLink
         >
       </p>

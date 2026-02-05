@@ -23,6 +23,48 @@ const MyPreset = definePreset(Aura, {
       900: '{orange.900}',
       950: '{orange.950}',
     },
+    colorScheme: {
+      light: {
+        surface: {
+          0: 'var(--bg-color)',
+          50: 'var(--surface)',
+          100: 'var(--surface-2)',
+          200: 'var(--surface-2)',
+          300: 'var(--surface-3)',
+          400: 'var(--surface-3)',
+          500: 'var(--surface-3)',
+          600: 'var(--surface-3)',
+          700: 'var(--surface-3)',
+          800: 'var(--surface-3)',
+          900: 'var(--surface-3)',
+          950: 'var(--surface-3)',
+        },
+        content: {
+          background: 'var(--bg-color)',
+          borderColor: 'var(--border-color)',
+        },
+      },
+      dark: {
+        surface: {
+          0: 'var(--bg-color)',
+          50: 'var(--surface)',
+          100: 'var(--surface-2)',
+          200: 'var(--surface-2)',
+          300: 'var(--surface-3)',
+          400: 'var(--surface-3)',
+          500: 'var(--surface-3)',
+          600: 'var(--surface-3)',
+          700: 'var(--surface-3)',
+          800: 'var(--surface-3)',
+          900: 'var(--surface-3)',
+          950: 'var(--surface-3)',
+        },
+        content: {
+          background: 'var(--bg-color)',
+          borderColor: 'var(--border-color)',
+        },
+      },
+    },
   },
 })
 

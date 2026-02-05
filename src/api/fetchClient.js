@@ -35,7 +35,7 @@ export const fetchClient = async (endpoint, options = {}) => {
       return data
     }
 
-    throw new Error(data.message || 'Error en la petición')
+    throw new Error(data.message || data.error || 'Error en la petición')
   } catch (error) {
     console.error('Fetch Error:', error)
     throw error

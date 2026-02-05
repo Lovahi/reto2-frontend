@@ -73,7 +73,7 @@ const handleRegister = async () => {
             v-model="username"
             type="text"
             id="username"
-            class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-gray-600"
+            class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-(--text-muted)/30"
             placeholder="tu_usuario"
             required
           />
@@ -89,7 +89,7 @@ const handleRegister = async () => {
             v-model="email"
             type="email"
             id="email"
-            class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-gray-600"
+            class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-(--text-muted)/30"
             placeholder="tu@email.com"
             required
           />
@@ -105,7 +105,7 @@ const handleRegister = async () => {
             v-model="password"
             type="password"
             id="password"
-            class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-gray-600"
+            class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-(--text-muted)/30"
             placeholder="••••••••"
             required
           />
@@ -121,7 +121,7 @@ const handleRegister = async () => {
             v-model="confirmPassword"
             type="password"
             id="confirm-password"
-            class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-gray-600"
+            class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) rounded-xl px-4 py-3 outline-none focus:border-(--primary) transition-all placeholder:text-(--text-muted)/30"
             placeholder="••••••••"
             required
           />

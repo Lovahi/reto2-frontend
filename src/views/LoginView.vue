@@ -3,7 +3,7 @@ import LoginComponent from '@/components/LoginComponent.vue'
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center pt-20 px-4">
+  <div class="min-h-screen flex items-center justify-center pt-24 md:pt-40 px-4">
     <LoginComponent />
   </div>
 </template>

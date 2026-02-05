@@ -21,9 +21,6 @@ defineProps({
           :alt="title"
           class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div
-          class="absolute inset-0 bg-linear-to-t from-(--surface) via-transparent to-transparent opacity-40"
-        ></div>
 
         <!-- Slot para badges flotantes -->
         <div class="absolute bottom-1 flex flex-wrap p-3 gap-1.5 justify-end">

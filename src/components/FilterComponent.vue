@@ -3,7 +3,6 @@ import { watch } from 'vue'
 import InputText from 'primevue/inputtext'
 import Select from 'primevue/select'
 import DatePicker from 'primevue/datepicker'
-import Checkbox from 'primevue/checkbox'
 
 const props = defineProps({
   modelValue: String,
@@ -74,8 +73,8 @@ watch(
           @update:modelValue="$emit('update:selectedType', $event)"
           :options="['Todos', ...types]"
           placeholder="Categoría"
-          class="w-full! bg-(--surface-2)/50! border-(--border-color)/30! rounded-2xl! transition-all hover:bg-(--surface-2)!"
-        />
+          class="w-full"
+        ></Select>
       </div>
 
       <!-- Filtro de Fecha -->
@@ -83,8 +82,8 @@ watch(
         <DatePicker
           :modelValue="dateModel"
           @update:modelValue="$emit('update:dateModel', $event)"
-          placeholder="Calendario"
-          class="w-full! bg-(--surface-2)/50! border-(--border-color)/30! rounded-2xl! transition-all hover:bg-(--surface-2)!"
+          placeholder="Fecha"
+          class="w-full custom-datepicker"
           dateFormat="yy-mm-dd"
           showIcon
           iconDisplay="input"
@@ -102,23 +101,28 @@ watch(
             : 'bg-(--surface-2)/50 border-(--border-color)/30 text-(--text-muted) hover:bg-(--surface-2)',
         ]"
       >
-        <Checkbox :modelValue="availableModel" :binary="true" class="w-4! h-4!" />
+        <i :class="['pi', availableModel ? 'pi-check' : 'pi-users']"></i>
         <span class="text-[10px] font-black uppercase tracking-widest">Plazas Libres</span>
       </div>
     </div>
-
-    <!-- Indicador de filtrado activo (subrayado naranja sutil) -->
-    <div
-      class="absolute bottom-0 left-6 right-6 h-[2px] bg-linear-to-r from-transparent via-(--primary)/30 to-transparent opacity-50"
-    ></div>
   </div>
 </template>
 
 <style scoped>
-/* Reset de estilos pesados de PrimeVue para un look más "Apple/Moderno" */
+/* Estilos base para los componentes de PrimeVue */
 :deep(.p-select),
-:deep(.p-datepicker) {
+:deep(.custom-datepicker) {
+  background: color-mix(in srgb, var(--surface-2), transparent 50%) !important;
+  border: 1px solid color-mix(in srgb, var(--border-color), transparent 70%) !important;
+  border-radius: 1.25rem !important;
+  transition: all 0.3s ease !important;
   box-shadow: none !important;
+}
+
+:deep(.p-select:hover),
+:deep(.custom-datepicker:hover) {
+  background: var(--surface-2) !important;
+  border-color: var(--primary) !important;
 }
 
 :deep(.p-select-label),
@@ -129,6 +133,111 @@ watch(
   letter-spacing: 0.05em !important;
   padding: 0.75rem 1.25rem !important;
   color: var(--text-main) !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Específico para el icono del DatePicker */
+:deep(.p-datepicker-input-icon) {
+  right: 1.25rem !important;
+  color: var(--primary) !important;
+  font-size: 0.9rem !important;
+}
+
+/* Panel del Calendario */
+:deep(.p-datepicker-panel) {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(20px) !important;
+  padding: 1rem !important;
+  margin-top: 0.5rem !important;
+}
+
+/* Encabezado del Calendario (Mes/Año y Flechas) */
+:deep(.p-datepicker-header) {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  padding-bottom: 0.75rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+:deep(.p-datepicker-title) {
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  font-size: 0.8rem !important;
+}
+
+:deep(.p-datepicker-prev-button),
+:deep(.p-datepicker-next-button) {
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 0.75rem !important;
+  color: var(--primary) !important;
+  transition: all 0.2s ease !important;
+}
+
+:deep(.p-datepicker-prev-button:hover),
+:deep(.p-datepicker-next-button:hover) {
+  background: color-mix(in srgb, var(--primary), transparent 90%) !important;
+}
+
+/* Vista de Días */
+:deep(.p-datepicker-day-view) {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0.25rem !important;
+}
+
+:deep(.p-datepicker-day-view th) {
+  padding: 0.5rem !important;
+  font-size: 0.65rem !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  color: var(--text-muted) !important;
+  letter-spacing: 0.1em !important;
+}
+
+:deep(.p-datepicker-day-view td) {
+  padding: 0 !important;
+}
+
+:deep(.p-datepicker-day) {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  border-radius: 0.75rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--text-main) !important;
+  cursor: pointer !important;
+}
+
+:deep(.p-datepicker-day:hover:not(.p-datepicker-day-selected):not(.p-datepicker-day-disabled)) {
+  background: color-mix(in srgb, var(--primary), transparent 90%) !important;
+  color: var(--primary) !important;
+  transform: translateY(-2px) !important;
+}
+
+:deep(.p-datepicker-day-selected) {
+  background: var(--primary) !important;
+  color: black !important;
+  box-shadow: 0 10px 15px -3px color-mix(in srgb, var(--primary), transparent 70%) !important;
+}
+
+:deep(.p-datepicker-today > .p-datepicker-day) {
+  border: 1px solid var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+:deep(.p-datepicker-today > .p-datepicker-day-selected) {
+  color: black !important;
+  border: none !important;
 }
 
 :deep(.p-select-overlay) {

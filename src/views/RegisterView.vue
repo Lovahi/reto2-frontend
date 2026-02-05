@@ -3,7 +3,7 @@ import RegisterComponent from '@/components/RegisterComponent.vue'
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center pt-24 px-4 pb-12">
+  <div class="min-h-screen flex items-center justify-center pt-24 md:pt-40 px-4 pb-12">
     <RegisterComponent />
   </div>
 </template>

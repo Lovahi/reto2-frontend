@@ -105,13 +105,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mx-auto p-4 md:p-10 pt-24 text-(--text-main)">
-    <h1
-      class="text-4xl font-black italic text-(--primary) mb-8 uppercase tracking-tighter text-center"
-    >
-      Juegos
-    </h1>
-
+  <div class="container mx-auto p-4 md:p-10 pt-24 md:pt-40 text-(--text-main)">
     <FilterComponent
       v-model="filtro"
       v-model:selectedType="filtroTipo"
@@ -132,7 +126,7 @@ onMounted(() => {
             <div
               v-for="plat in item.platforms"
               :key="plat"
-              class="px-2 py-0.5 bg-black/20 text-[10px] text-(--primary) border border-(--border-color) rounded uppercase font-bold"
+              class="px-2 py-0.5 bg-(--surface-2)/50 text-[10px] text-(--primary) border border-(--border-color) rounded uppercase font-bold"
             >
               {{ plat }}
             </div>

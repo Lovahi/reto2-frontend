@@ -10,9 +10,10 @@ export const eventService = {
     return fetchClient(`/events${queryString ? `?${queryString}` : ''}`)
   },
   getEventsCounter: () => fetchClient('/events/pages'),
-  getUserEvents: () => fetchClient(`/events/users/`),
+  getUserEvents: (userId) => fetchClient(`/users/${userId}/events`),
   getEventById: (id) => fetchClient(`/events/${id}`),
   createEvent: (eventData) => fetchClient('/events', { method: 'POST', body: eventData }),
   signupEvent: (eventId) => fetchClient(`/events/${eventId}/signup`, { method: 'POST' }),
-  cancelEvent: (eventId) => fetchClient(`/events/${eventId}/cancel`, { method: 'DELETE' }),
+  cancelEvent: (eventId) => fetchClient(`/events/${eventId}/signup`, { method: 'DELETE' }),
+  getEventUsers: (id) => fetchClient(`/events/${id}/users`),
 }
