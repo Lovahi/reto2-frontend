@@ -39,15 +39,17 @@ const form = ref({
 })
 
 const imagePreview = ref('')
+const selectedFile = ref(null)
 
 const handleImageUpload = (event) => {
   const file = event.target.files[0]
   if (file) {
+    selectedFile.value = file
     // Create preview
     const reader = new FileReader()
     reader.onload = (e) => {
       imagePreview.value = e.target.result
-      form.value.image = file.name // Store just the filename
+      form.value.image = file.name
     }
     reader.readAsDataURL(file)
   }
@@ -64,11 +66,13 @@ const resetForm = () => {
     image: '',
   }
   imagePreview.value = ''
+  selectedFile.value = null
 }
 
 const clearImage = () => {
   imagePreview.value = ''
   form.value.image = ''
+  selectedFile.value = null
 }
 
 const handleSubmit = async () => {
@@ -82,15 +86,21 @@ const handleSubmit = async () => {
       throw new Error('Por favor, rellena todos los campos obligatorios.')
     }
 
-    const payload = {
-      ...form.value,
-      type: form.value.type.value,
-      date: new Date(form.value.date).toISOString().split('T')[0],
-      // Imagen por defecto si está vacía para evitar errores de backend
-      image: form.value.image || 'default_event.png',
+    const formData = new FormData()
+    formData.append('title', form.value.title)
+    formData.append('type', form.value.type.value)
+    formData.append('date', new Date(form.value.date).toISOString().split('T')[0])
+    formData.append('hour', form.value.hour)
+    formData.append('availablePlaces', form.value.availablePlaces)
+    formData.append('description', form.value.description)
+
+    if (selectedFile.value) {
+      formData.append('image', selectedFile.value)
+    } else {
+      formData.append('image', form.value.image || 'default_event.png')
     }
 
-    await eventService.createEvent(payload)
+    await eventService.createEvent(formData)
     successMsg.value = '¡Evento creado con éxito!'
     resetForm()
   } catch (error) {

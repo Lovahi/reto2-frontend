@@ -21,10 +21,12 @@ const handleLogin = async () => {
       password: password.value,
     })
 
-    // El backend devuelve { message: '...', user: {...} }
-    if (response && response.user) {
+    // El backend devuelve { message: '...', user: {...} } o el objeto user directamente
+    const userData = response.user || (response.username ? response : null)
+
+    if (userData) {
       // Como el backend usa sesiones de PHP, el token es simbólico para el frontend
-      authStore.setAuth('session-active', response.user)
+      authStore.setAuth('session-active', userData)
       router.push('/')
     } else {
       error.value = 'Credenciales inválidas'

@@ -117,7 +117,7 @@ onMounted(() => {
         <h1
           class="text-3xl md:text-4xl font-black italic uppercase tracking-tighter text-(--primary) mb-2"
         >
-          {{ user.name }}
+          {{ user.username }}
         </h1>
         <p class="text-(--text-muted) text-sm font-bold uppercase tracking-widest">
           {{ user.email }}
@@ -207,10 +207,10 @@ onMounted(() => {
               <div>
                 <label
                   class="block text-xs font-bold uppercase tracking-widest text-(--text-muted) mb-2"
-                  >Nombre</label
+                  >Nombre de Usuario</label
                 >
                 <InputText
-                  v-model="user.name"
+                  v-model="user.username"
                   class="w-full bg-(--surface-2) border border-(--border-color) text-(--text-main) p-3 rounded-xl"
                 />
               </div>

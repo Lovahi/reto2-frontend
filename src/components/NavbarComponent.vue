@@ -136,7 +136,9 @@ onUnmounted(() => {
         @click="menuOpen = false"
       >
         <i class="pi pi-user mr-3"></i>
-        {{ authStore.isAuthenticated() ? authStore.user?.name || 'Mi Cuenta' : 'Iniciar Sesión' }}
+        {{
+          authStore.isAuthenticated() ? authStore.user?.username || 'Mi Cuenta' : 'Iniciar Sesión'
+        }}
       </RouterLink>
 
       <button
@@ -185,7 +187,9 @@ onUnmounted(() => {
         @click="menuOpen = false"
       >
         <i class="pi pi-user mr-3"></i>
-        {{ authStore.isAuthenticated() ? authStore.user?.name || 'Mi Cuenta' : 'Iniciar Sesión' }}
+        {{
+          authStore.isAuthenticated() ? authStore.user?.username || 'Mi Cuenta' : 'Iniciar Sesión'
+        }}
       </RouterLink>
     </div>
   </nav>
